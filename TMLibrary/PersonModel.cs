@@ -14,6 +14,5 @@ namespace TMLibrary
         public string LastName { get; set; }
         public string DiscordTag { get; set; }
         public string EmailAddress { get; set; }
-        public string CellphoneNumber { get; set; }
     }
 }

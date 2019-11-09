@@ -9,17 +9,17 @@ namespace TMLibrary
     public class MatchupEntryModel
     {
         /// <summary>
-        /// Represents one team in the matchup.
+        /// Represents one entry in the matchup.
         /// </summary>
-        public TeamModel TeamCompeting { get; set; }
+        public EntryModel EntryCompeting { get; set; }
 
         /// <summary>
-        /// Represents the score for this particular team.
+        /// Represents the score for this particular entry.
         /// </summary>
         public double Score { get; set; }
 
         /// <summary>
-        /// Represents the matchup that this team came from as the winner.
+        /// Represents the matchup that this entry came from as the winner.
         /// </summary>
         public MatchupModel ParentMatchup { get; set; }
     }

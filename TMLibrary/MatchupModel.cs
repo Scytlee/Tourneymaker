@@ -9,7 +9,7 @@ namespace TMLibrary
     public class MatchupModel
     {
         public List<MatchupEntryModel> MatchupEntries { get; set; }
-        public TeamModel Winner { get; set; }
+        public EntryModel Winner { get; set; }
         public int MatchupRound { get; set; }
     }
 }
