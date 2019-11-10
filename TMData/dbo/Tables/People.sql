@@ -2,8 +2,8 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
 	[Nickname] NVARCHAR(50) NULL,
-	[FirstName] NVARCHAR(100) NULL,
-	[LastName] NVARCHAR(100) NULL,
+	[FirstName] NVARCHAR(50) NULL,
+	[LastName] NVARCHAR(50) NULL,
 	[DiscordTag] NVARCHAR(100) NULL,
 	[EmailAddress] NVARCHAR(200) NULL
 )

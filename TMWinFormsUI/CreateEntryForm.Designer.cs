@@ -38,18 +38,18 @@
             this.EntryMembersListBox = new System.Windows.Forms.ListBox();
             this.removeSelectedPersonButton = new System.Windows.Forms.Button();
             this.personCreatorGroupBox = new System.Windows.Forms.GroupBox();
-            this.personCreatorNicknameLabel = new System.Windows.Forms.Label();
-            this.personCreatorNicknameValue = new System.Windows.Forms.TextBox();
-            this.personCreatorFirstNameValue = new System.Windows.Forms.TextBox();
-            this.personCreatorFirstNameLabel = new System.Windows.Forms.Label();
-            this.personCreatorLastNameValue = new System.Windows.Forms.TextBox();
-            this.personCreatorLastNameLabel = new System.Windows.Forms.Label();
-            this.personCreatorDiscordTagValue = new System.Windows.Forms.TextBox();
-            this.personCreatorDiscordTagLabel = new System.Windows.Forms.Label();
+            this.personCreatorCreateAndAddButton = new System.Windows.Forms.Button();
+            this.personCreatorCreateButton = new System.Windows.Forms.Button();
             this.personCreatorEmailAddressValue = new System.Windows.Forms.TextBox();
             this.personCreatorEmailAddressLabel = new System.Windows.Forms.Label();
-            this.personCreatorCreateButton = new System.Windows.Forms.Button();
-            this.personCreatorCreateAndAddButton = new System.Windows.Forms.Button();
+            this.personCreatorDiscordTagValue = new System.Windows.Forms.TextBox();
+            this.personCreatorDiscordTagLabel = new System.Windows.Forms.Label();
+            this.personCreatorLastNameValue = new System.Windows.Forms.TextBox();
+            this.personCreatorLastNameLabel = new System.Windows.Forms.Label();
+            this.personCreatorFirstNameValue = new System.Windows.Forms.TextBox();
+            this.personCreatorFirstNameLabel = new System.Windows.Forms.Label();
+            this.personCreatorNicknameValue = new System.Windows.Forms.TextBox();
+            this.personCreatorNicknameLabel = new System.Windows.Forms.Label();
             this.createEntryButton = new System.Windows.Forms.Button();
             this.personCreatorGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -192,85 +192,39 @@
             this.personCreatorGroupBox.TabStop = false;
             this.personCreatorGroupBox.Text = "Person creator";
             // 
-            // personCreatorNicknameLabel
+            // personCreatorCreateAndAddButton
             // 
-            this.personCreatorNicknameLabel.AutoSize = true;
-            this.personCreatorNicknameLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personCreatorNicknameLabel.Location = new System.Drawing.Point(16, 59);
-            this.personCreatorNicknameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.personCreatorNicknameLabel.Name = "personCreatorNicknameLabel";
-            this.personCreatorNicknameLabel.Size = new System.Drawing.Size(103, 33);
-            this.personCreatorNicknameLabel.TabIndex = 19;
-            this.personCreatorNicknameLabel.Text = "Nickname";
+            this.personCreatorCreateAndAddButton.BackColor = System.Drawing.Color.White;
+            this.personCreatorCreateAndAddButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.personCreatorCreateAndAddButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.personCreatorCreateAndAddButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.personCreatorCreateAndAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.personCreatorCreateAndAddButton.Font = new System.Drawing.Font("Bahnschrift Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personCreatorCreateAndAddButton.ForeColor = System.Drawing.Color.Black;
+            this.personCreatorCreateAndAddButton.Location = new System.Drawing.Point(216, 321);
+            this.personCreatorCreateAndAddButton.Name = "personCreatorCreateAndAddButton";
+            this.personCreatorCreateAndAddButton.Size = new System.Drawing.Size(192, 67);
+            this.personCreatorCreateAndAddButton.TabIndex = 28;
+            this.personCreatorCreateAndAddButton.Text = "Create and add";
+            this.personCreatorCreateAndAddButton.UseVisualStyleBackColor = false;
+            this.personCreatorCreateAndAddButton.Click += new System.EventHandler(this.personCreatorCreateAndAddButton_Click);
             // 
-            // personCreatorNicknameValue
+            // personCreatorCreateButton
             // 
-            this.personCreatorNicknameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.personCreatorNicknameValue.ForeColor = System.Drawing.Color.White;
-            this.personCreatorNicknameValue.Location = new System.Drawing.Point(161, 55);
-            this.personCreatorNicknameValue.Name = "personCreatorNicknameValue";
-            this.personCreatorNicknameValue.Size = new System.Drawing.Size(247, 40);
-            this.personCreatorNicknameValue.TabIndex = 19;
-            // 
-            // personCreatorFirstNameValue
-            // 
-            this.personCreatorFirstNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.personCreatorFirstNameValue.ForeColor = System.Drawing.Color.White;
-            this.personCreatorFirstNameValue.Location = new System.Drawing.Point(161, 104);
-            this.personCreatorFirstNameValue.Name = "personCreatorFirstNameValue";
-            this.personCreatorFirstNameValue.Size = new System.Drawing.Size(247, 40);
-            this.personCreatorFirstNameValue.TabIndex = 20;
-            // 
-            // personCreatorFirstNameLabel
-            // 
-            this.personCreatorFirstNameLabel.AutoSize = true;
-            this.personCreatorFirstNameLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personCreatorFirstNameLabel.Location = new System.Drawing.Point(16, 108);
-            this.personCreatorFirstNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.personCreatorFirstNameLabel.Name = "personCreatorFirstNameLabel";
-            this.personCreatorFirstNameLabel.Size = new System.Drawing.Size(110, 33);
-            this.personCreatorFirstNameLabel.TabIndex = 21;
-            this.personCreatorFirstNameLabel.Text = "First name";
-            // 
-            // personCreatorLastNameValue
-            // 
-            this.personCreatorLastNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.personCreatorLastNameValue.ForeColor = System.Drawing.Color.White;
-            this.personCreatorLastNameValue.Location = new System.Drawing.Point(161, 153);
-            this.personCreatorLastNameValue.Name = "personCreatorLastNameValue";
-            this.personCreatorLastNameValue.Size = new System.Drawing.Size(247, 40);
-            this.personCreatorLastNameValue.TabIndex = 22;
-            // 
-            // personCreatorLastNameLabel
-            // 
-            this.personCreatorLastNameLabel.AutoSize = true;
-            this.personCreatorLastNameLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personCreatorLastNameLabel.Location = new System.Drawing.Point(16, 157);
-            this.personCreatorLastNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.personCreatorLastNameLabel.Name = "personCreatorLastNameLabel";
-            this.personCreatorLastNameLabel.Size = new System.Drawing.Size(108, 33);
-            this.personCreatorLastNameLabel.TabIndex = 23;
-            this.personCreatorLastNameLabel.Text = "Last name";
-            // 
-            // personCreatorDiscordTagValue
-            // 
-            this.personCreatorDiscordTagValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.personCreatorDiscordTagValue.ForeColor = System.Drawing.Color.White;
-            this.personCreatorDiscordTagValue.Location = new System.Drawing.Point(161, 202);
-            this.personCreatorDiscordTagValue.Name = "personCreatorDiscordTagValue";
-            this.personCreatorDiscordTagValue.Size = new System.Drawing.Size(247, 40);
-            this.personCreatorDiscordTagValue.TabIndex = 24;
-            // 
-            // personCreatorDiscordTagLabel
-            // 
-            this.personCreatorDiscordTagLabel.AutoSize = true;
-            this.personCreatorDiscordTagLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personCreatorDiscordTagLabel.Location = new System.Drawing.Point(16, 206);
-            this.personCreatorDiscordTagLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.personCreatorDiscordTagLabel.Name = "personCreatorDiscordTagLabel";
-            this.personCreatorDiscordTagLabel.Size = new System.Drawing.Size(115, 33);
-            this.personCreatorDiscordTagLabel.TabIndex = 25;
-            this.personCreatorDiscordTagLabel.Text = "Discord tag";
+            this.personCreatorCreateButton.BackColor = System.Drawing.Color.White;
+            this.personCreatorCreateButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.personCreatorCreateButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.personCreatorCreateButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.personCreatorCreateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.personCreatorCreateButton.Font = new System.Drawing.Font("Bahnschrift Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personCreatorCreateButton.ForeColor = System.Drawing.Color.Black;
+            this.personCreatorCreateButton.Location = new System.Drawing.Point(18, 321);
+            this.personCreatorCreateButton.Name = "personCreatorCreateButton";
+            this.personCreatorCreateButton.Size = new System.Drawing.Size(192, 67);
+            this.personCreatorCreateButton.TabIndex = 19;
+            this.personCreatorCreateButton.Text = "Create";
+            this.personCreatorCreateButton.UseVisualStyleBackColor = false;
+            this.personCreatorCreateButton.Click += new System.EventHandler(this.personCreatorCreateButton_Click);
             // 
             // personCreatorEmailAddressValue
             // 
@@ -292,37 +246,85 @@
             this.personCreatorEmailAddressLabel.TabIndex = 27;
             this.personCreatorEmailAddressLabel.Text = "Email address";
             // 
-            // personCreatorCreateButton
+            // personCreatorDiscordTagValue
             // 
-            this.personCreatorCreateButton.BackColor = System.Drawing.Color.White;
-            this.personCreatorCreateButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.personCreatorCreateButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.personCreatorCreateButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.personCreatorCreateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.personCreatorCreateButton.Font = new System.Drawing.Font("Bahnschrift Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personCreatorCreateButton.ForeColor = System.Drawing.Color.Black;
-            this.personCreatorCreateButton.Location = new System.Drawing.Point(18, 321);
-            this.personCreatorCreateButton.Name = "personCreatorCreateButton";
-            this.personCreatorCreateButton.Size = new System.Drawing.Size(192, 67);
-            this.personCreatorCreateButton.TabIndex = 19;
-            this.personCreatorCreateButton.Text = "Create";
-            this.personCreatorCreateButton.UseVisualStyleBackColor = false;
+            this.personCreatorDiscordTagValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.personCreatorDiscordTagValue.ForeColor = System.Drawing.Color.White;
+            this.personCreatorDiscordTagValue.Location = new System.Drawing.Point(161, 202);
+            this.personCreatorDiscordTagValue.Name = "personCreatorDiscordTagValue";
+            this.personCreatorDiscordTagValue.Size = new System.Drawing.Size(247, 40);
+            this.personCreatorDiscordTagValue.TabIndex = 24;
             // 
-            // personCreatorCreateAndAddButton
+            // personCreatorDiscordTagLabel
             // 
-            this.personCreatorCreateAndAddButton.BackColor = System.Drawing.Color.White;
-            this.personCreatorCreateAndAddButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.personCreatorCreateAndAddButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.personCreatorCreateAndAddButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.personCreatorCreateAndAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.personCreatorCreateAndAddButton.Font = new System.Drawing.Font("Bahnschrift Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personCreatorCreateAndAddButton.ForeColor = System.Drawing.Color.Black;
-            this.personCreatorCreateAndAddButton.Location = new System.Drawing.Point(216, 321);
-            this.personCreatorCreateAndAddButton.Name = "personCreatorCreateAndAddButton";
-            this.personCreatorCreateAndAddButton.Size = new System.Drawing.Size(192, 67);
-            this.personCreatorCreateAndAddButton.TabIndex = 28;
-            this.personCreatorCreateAndAddButton.Text = "Create and add";
-            this.personCreatorCreateAndAddButton.UseVisualStyleBackColor = false;
+            this.personCreatorDiscordTagLabel.AutoSize = true;
+            this.personCreatorDiscordTagLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personCreatorDiscordTagLabel.Location = new System.Drawing.Point(16, 206);
+            this.personCreatorDiscordTagLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.personCreatorDiscordTagLabel.Name = "personCreatorDiscordTagLabel";
+            this.personCreatorDiscordTagLabel.Size = new System.Drawing.Size(115, 33);
+            this.personCreatorDiscordTagLabel.TabIndex = 25;
+            this.personCreatorDiscordTagLabel.Text = "Discord tag";
+            // 
+            // personCreatorLastNameValue
+            // 
+            this.personCreatorLastNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.personCreatorLastNameValue.ForeColor = System.Drawing.Color.White;
+            this.personCreatorLastNameValue.Location = new System.Drawing.Point(161, 153);
+            this.personCreatorLastNameValue.Name = "personCreatorLastNameValue";
+            this.personCreatorLastNameValue.Size = new System.Drawing.Size(247, 40);
+            this.personCreatorLastNameValue.TabIndex = 22;
+            // 
+            // personCreatorLastNameLabel
+            // 
+            this.personCreatorLastNameLabel.AutoSize = true;
+            this.personCreatorLastNameLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personCreatorLastNameLabel.Location = new System.Drawing.Point(16, 157);
+            this.personCreatorLastNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.personCreatorLastNameLabel.Name = "personCreatorLastNameLabel";
+            this.personCreatorLastNameLabel.Size = new System.Drawing.Size(108, 33);
+            this.personCreatorLastNameLabel.TabIndex = 23;
+            this.personCreatorLastNameLabel.Text = "Last name";
+            // 
+            // personCreatorFirstNameValue
+            // 
+            this.personCreatorFirstNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.personCreatorFirstNameValue.ForeColor = System.Drawing.Color.White;
+            this.personCreatorFirstNameValue.Location = new System.Drawing.Point(161, 104);
+            this.personCreatorFirstNameValue.Name = "personCreatorFirstNameValue";
+            this.personCreatorFirstNameValue.Size = new System.Drawing.Size(247, 40);
+            this.personCreatorFirstNameValue.TabIndex = 20;
+            // 
+            // personCreatorFirstNameLabel
+            // 
+            this.personCreatorFirstNameLabel.AutoSize = true;
+            this.personCreatorFirstNameLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personCreatorFirstNameLabel.Location = new System.Drawing.Point(16, 108);
+            this.personCreatorFirstNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.personCreatorFirstNameLabel.Name = "personCreatorFirstNameLabel";
+            this.personCreatorFirstNameLabel.Size = new System.Drawing.Size(110, 33);
+            this.personCreatorFirstNameLabel.TabIndex = 21;
+            this.personCreatorFirstNameLabel.Text = "First name";
+            // 
+            // personCreatorNicknameValue
+            // 
+            this.personCreatorNicknameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.personCreatorNicknameValue.ForeColor = System.Drawing.Color.White;
+            this.personCreatorNicknameValue.Location = new System.Drawing.Point(161, 55);
+            this.personCreatorNicknameValue.Name = "personCreatorNicknameValue";
+            this.personCreatorNicknameValue.Size = new System.Drawing.Size(247, 40);
+            this.personCreatorNicknameValue.TabIndex = 19;
+            // 
+            // personCreatorNicknameLabel
+            // 
+            this.personCreatorNicknameLabel.AutoSize = true;
+            this.personCreatorNicknameLabel.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personCreatorNicknameLabel.Location = new System.Drawing.Point(16, 59);
+            this.personCreatorNicknameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.personCreatorNicknameLabel.Name = "personCreatorNicknameLabel";
+            this.personCreatorNicknameLabel.Size = new System.Drawing.Size(103, 33);
+            this.personCreatorNicknameLabel.TabIndex = 19;
+            this.personCreatorNicknameLabel.Text = "Nickname";
             // 
             // createEntryButton
             // 

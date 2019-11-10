@@ -10,6 +10,8 @@ namespace TMLibrary
 {
     public static class GlobalConfig
     {
+        public const string PeopleFile = "PersonModels.csv";
+
         public static IDataConnection Connection { get; private set; }
 
         public static void InitializeConnection(ConnectionType connectionType)

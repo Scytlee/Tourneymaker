@@ -19,10 +19,9 @@ namespace TMWinFormsUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Initialize the database connections
-            TMLibrary.GlobalConfig.InitializeConnection(ConnectionType.SqlDatabase);
+            TMLibrary.GlobalConfig.InitializeConnection(ConnectionType.TextFile);
 
             Application.Run(new CreateEntryForm());
-            
             //Application.Run(new TournamentDashboardForm());
         }
     }
