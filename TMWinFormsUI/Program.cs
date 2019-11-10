@@ -16,7 +16,7 @@ namespace TMWinFormsUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TournamentDashboardForm());
+            Application.Run(new TournamentDashboardForm();
         }
     }
 }
