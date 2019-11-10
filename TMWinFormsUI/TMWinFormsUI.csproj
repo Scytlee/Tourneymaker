@@ -106,5 +106,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TMLibrary\TMLibrary.csproj">
+      <Project>{938f78d5-73c8-4362-92e9-1b0b0d79be8b}</Project>
+      <Name>TMLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

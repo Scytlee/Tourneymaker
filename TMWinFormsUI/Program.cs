@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TMLibrary;
 
 namespace TMWinFormsUI
 {
@@ -16,7 +17,13 @@ namespace TMWinFormsUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TournamentDashboardForm();
+
+            // Initialize the database connections
+            TMLibrary.GlobalConfig.InitializeConnection(ConnectionType.SqlDatabase);
+
+            Application.Run(new CreateEntryForm());
+            
+            //Application.Run(new TournamentDashboardForm());
         }
     }
 }
