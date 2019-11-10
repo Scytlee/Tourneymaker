@@ -16,12 +16,16 @@ namespace TMWinFormsUI
 {
     public partial class CreateEntryForm : Form
     {
+        private IEntryRequester _callingForm;
+
         private List<PersonModel> _availablePeople = GlobalConfig.Connection.LoadPersonModels();
         private List<PersonModel> _selectedPeople = new List<PersonModel>();
 
-        public CreateEntryForm()
+        public CreateEntryForm(IEntryRequester caller)
         {
             InitializeComponent();
+
+            _callingForm = caller;
 
             //CreateSampleData();
 
@@ -46,12 +50,12 @@ namespace TMWinFormsUI
             _availablePeople = _availablePeople.OrderBy(x => x.DisplayName).ToList();
             selectPersonDropDown.DataSource = null;
             selectPersonDropDown.DataSource = _availablePeople;
-            selectPersonDropDown.DisplayMember = "DisplayName";
+            selectPersonDropDown.DisplayMember = nameof(PersonModel.DisplayName);
 
             _selectedPeople = _selectedPeople.OrderBy(x => x.DisplayName).ToList();
             entryMembersListBox.DataSource = null;
             entryMembersListBox.DataSource = _selectedPeople;
-            entryMembersListBox.DisplayMember = "DisplayName";
+            entryMembersListBox.DisplayMember = nameof(PersonModel.DisplayName);
         }
 
         // TODO Refactor person creation to not repeat code in both methods
@@ -174,6 +178,9 @@ namespace TMWinFormsUI
 
                 // Add the EntryModel to the database
                 GlobalConfig.Connection.CreateEntry(entry);
+
+                // Notify calling form about the entry
+                _callingForm.EntryComplete(entry);
 
                 // Clear the form
                 ClearEntryForm();

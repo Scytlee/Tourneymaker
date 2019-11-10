@@ -8,5 +8,6 @@ namespace TMLibrary.DataAccess
         void CreatePerson(PersonModel newPerson);
         void CreateEntry(EntryModel newEntry);
         List<PersonModel> LoadPersonModels();
+        List<EntryModel> LoadEntryModels();
     }
 }

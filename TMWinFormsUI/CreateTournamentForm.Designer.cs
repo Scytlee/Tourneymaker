@@ -81,9 +81,9 @@
             this.selectEntryDropDown.Font = new System.Drawing.Font("Bahnschrift", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectEntryDropDown.ForeColor = System.Drawing.Color.White;
             this.selectEntryDropDown.FormattingEnabled = true;
-            this.selectEntryDropDown.Location = new System.Drawing.Point(50, 231);
+            this.selectEntryDropDown.Location = new System.Drawing.Point(17, 231);
             this.selectEntryDropDown.Name = "selectEntryDropDown";
-            this.selectEntryDropDown.Size = new System.Drawing.Size(263, 41);
+            this.selectEntryDropDown.Size = new System.Drawing.Size(328, 41);
             this.selectEntryDropDown.TabIndex = 10;
             // 
             // selectEntryLabel
@@ -112,6 +112,7 @@
             this.addSelectedEntryButton.TabIndex = 12;
             this.addSelectedEntryButton.Text = "Add selected entry";
             this.addSelectedEntryButton.UseVisualStyleBackColor = false;
+            this.addSelectedEntryButton.Click += new System.EventHandler(this.addSelectedEntryButton_Click);
             // 
             // createNewEntryButton
             // 
@@ -128,6 +129,7 @@
             this.createNewEntryButton.TabIndex = 13;
             this.createNewEntryButton.Text = "Create new entry";
             this.createNewEntryButton.UseVisualStyleBackColor = false;
+            this.createNewEntryButton.Click += new System.EventHandler(this.createNewEntryButton_Click);
             // 
             // tournamentEntriesListBox
             // 
@@ -168,6 +170,7 @@
             this.removeSelectedEntryButton.TabIndex = 16;
             this.removeSelectedEntryButton.Text = "Remove selected entry";
             this.removeSelectedEntryButton.UseVisualStyleBackColor = false;
+            this.removeSelectedEntryButton.Click += new System.EventHandler(this.removeSelectedEntryButton_Click);
             // 
             // createTournamentButton
             // 
@@ -204,7 +207,7 @@
             this.Controls.Add(this.headerLabel);
             this.Font = new System.Drawing.Font("Bahnschrift SemiLight", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Margin = new System.Windows.Forms.Padding(8);
             this.Name = "CreateTournamentForm";
             this.Text = "Create Tournament";
             this.ResumeLayout(false);

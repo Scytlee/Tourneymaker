@@ -34,7 +34,7 @@ namespace TMLibrary.DataAccess
         public void CreateEntry(EntryModel newEntry)
         {
             // Load the EntryModels text file and convert the text to List<EntryModel>
-            List<EntryModel> entries = GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
+            List<EntryModel> entries = LoadEntryModels();
 
             // Find the max ID
             int currentId = 1;
@@ -58,6 +58,11 @@ namespace TMLibrary.DataAccess
         public List<PersonModel> LoadPersonModels()
         {
             return GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+        }
+
+        public List<EntryModel> LoadEntryModels()
+        {
+            return GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
         }
     }
 }

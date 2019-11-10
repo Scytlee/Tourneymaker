@@ -57,7 +57,27 @@ namespace TMLibrary.DataAccess
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
             {
-                output = connection.Query<PersonModel>("spPeople_GetAll").ToList();
+                output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();
+            }
+
+            return output;
+        }
+
+        public List<EntryModel> LoadEntryModels()
+        {
+            List<EntryModel> output;
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            {
+                output = connection.Query<EntryModel>("dbo.spEntries_GetAll").ToList();
+
+                foreach (EntryModel entry in output)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@EntryId", entry.Id);
+
+                    entry.EntryMembers = connection.Query<PersonModel>("dbo.spEntryMembers_GetByEntry", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
 
             return output;
