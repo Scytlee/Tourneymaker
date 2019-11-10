@@ -10,7 +10,7 @@ namespace TMLibrary.DataAccess
         public void CreatePerson(PersonModel newPerson)
         {
             // Load the PersonModels text file and convert the text to List<PersonModel>
-            List<PersonModel> people = GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+            List<PersonModel> people = LoadPersonModels();
 
             int currentId = 1;
 
@@ -24,6 +24,11 @@ namespace TMLibrary.DataAccess
             people.Add(newPerson);
 
             people.SaveToPersonModelsFile();
+        }
+
+        public List<PersonModel> LoadPersonModels()
+        {
+            return GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
         }
     }
 }

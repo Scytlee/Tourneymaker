@@ -34,5 +34,25 @@
         /// The primary email address of the person.
         /// </summary>
         public string EmailAddress { get; set; }
+
+        public string DisplayName
+        {
+            get
+            {
+                if (Nickname == "")
+                {
+                    return $"{ FirstName } { LastName }";
+                }
+                else if (FirstName == "" && LastName == "")
+                {
+                    return Nickname;
+                }
+                else
+                {
+                    return $"{ FirstName } { LastName } ({ Nickname })";
+                }
+            }
+        }
+
     }
 }

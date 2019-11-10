@@ -16,12 +16,43 @@ namespace TMWinFormsUI
 {
     public partial class CreateEntryForm : Form
     {
+        private List<PersonModel> _availablePeople = GlobalConfig.Connection.LoadPersonModels();
+        private List<PersonModel> _selectedPeople = new List<PersonModel>();
+
         public CreateEntryForm()
         {
             InitializeComponent();
+
+            //CreateSampleData();
+
+            WireUpLists();
         }
 
-        // TODO Refactor creation to not repeat in both methods
+        private void CreateSampleData()
+        {
+            _availablePeople.Add(new PersonModel { FirstName = "Test", LastName = "Person1", Nickname = "TP1"});
+            _availablePeople.Add(new PersonModel { FirstName = "Test", LastName = "Person2", Nickname = "" });
+            _availablePeople.Add(new PersonModel { FirstName = "", LastName = "", Nickname = "TP3"});
+            _availablePeople.Add(new PersonModel { FirstName = "VeryLongFirstName", LastName = "VeryLongLastName", Nickname = "VeryLongNickname" });
+
+            _selectedPeople.Add(new PersonModel { FirstName = "Test", LastName = "Person1", Nickname = "TP1" });
+            _selectedPeople.Add(new PersonModel { FirstName = "Test", LastName = "Person2", Nickname = "" });
+            _selectedPeople.Add(new PersonModel { FirstName = "", LastName = "", Nickname = "TP3" });
+            _selectedPeople.Add(new PersonModel { FirstName = "VeryLongFirstName", LastName = "VeryLongLastName", Nickname = "VeryLongNickname" });
+        }
+
+        private void WireUpLists()
+        {
+            selectPersonDropDown.DataSource = null;
+            selectPersonDropDown.DataSource = _availablePeople;
+            selectPersonDropDown.DisplayMember = "DisplayName";
+
+            entryMembersListBox.DataSource = null;
+            entryMembersListBox.DataSource = _selectedPeople;
+            entryMembersListBox.DisplayMember = "DisplayName";
+        }
+
+        // TODO Refactor person creation to not repeat code in both methods
         private void personCreatorCreateButton_Click(object sender, EventArgs e)
         {
             // Validate the data in the form
@@ -44,10 +75,15 @@ namespace TMWinFormsUI
 
                 // Clear the form
                 ClearPersonCreatorForm();
+
+                _availablePeople.Add(person);
+
+                WireUpLists();
             }
             else
             {
                 // Show error message
+                // TODO Correct the message
                 MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }");
             }
         }
@@ -72,10 +108,12 @@ namespace TMWinFormsUI
                 // Add the PersonModel to the database
                 GlobalConfig.Connection.CreatePerson(person);
 
+                _selectedPeople.Add(person);
+
+                WireUpLists();
+
                 // Clear the form
                 ClearPersonCreatorForm();
-
-                // TODO Add member to entry
             }
             else
             {
@@ -93,17 +131,38 @@ namespace TMWinFormsUI
             personCreatorEmailAddressValue.Text = "";
         }
 
+        private void addSelectedEntryButton_Click(object sender, EventArgs e)
+        {
+            PersonModel person = (PersonModel) selectPersonDropDown.SelectedItem;
+
+            if (person != null)
+            {
+                _availablePeople.Remove(person);
+                _selectedPeople.Add(person);
+
+                WireUpLists(); 
+            }
+        }
+
+        private void removeSelectedPersonButton_Click(object sender, EventArgs e)
+        {
+            PersonModel person = (PersonModel) entryMembersListBox.SelectedItem;
+
+            if (person != null)
+            {
+                _selectedPeople.Remove(person);
+                _availablePeople.Add(person);
+
+                WireUpLists(); 
+            }
+        }
+
         private void CreateEntryForm_Load(object sender, EventArgs e)
         {
 
         }
 
         private void entryNameValue_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addSelectedEntryButton_Click(object sender, EventArgs e)
         {
 
         }

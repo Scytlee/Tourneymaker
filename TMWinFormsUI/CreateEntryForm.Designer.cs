@@ -35,7 +35,7 @@
             this.addSelectedPersonButton = new System.Windows.Forms.Button();
             this.selectPersonLabel = new System.Windows.Forms.Label();
             this.selectPersonDropDown = new System.Windows.Forms.ComboBox();
-            this.EntryMembersListBox = new System.Windows.Forms.ListBox();
+            this.entryMembersListBox = new System.Windows.Forms.ListBox();
             this.removeSelectedPersonButton = new System.Windows.Forms.Button();
             this.personCreatorGroupBox = new System.Windows.Forms.GroupBox();
             this.personCreatorCreateAndAddButton = new System.Windows.Forms.Button();
@@ -132,27 +132,27 @@
             // 
             this.selectPersonDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.selectPersonDropDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectPersonDropDown.Font = new System.Drawing.Font("Bahnschrift", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectPersonDropDown.Font = new System.Drawing.Font("Bahnschrift SemiLight Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectPersonDropDown.ForeColor = System.Drawing.Color.White;
             this.selectPersonDropDown.FormattingEnabled = true;
-            this.selectPersonDropDown.Location = new System.Drawing.Point(54, 260);
+            this.selectPersonDropDown.Location = new System.Drawing.Point(21, 260);
             this.selectPersonDropDown.Name = "selectPersonDropDown";
-            this.selectPersonDropDown.Size = new System.Drawing.Size(263, 41);
+            this.selectPersonDropDown.Size = new System.Drawing.Size(328, 41);
             this.selectPersonDropDown.TabIndex = 13;
             this.selectPersonDropDown.SelectedIndexChanged += new System.EventHandler(this.selectEntryDropDown_SelectedIndexChanged);
             // 
-            // EntryMembersListBox
+            // entryMembersListBox
             // 
-            this.EntryMembersListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.EntryMembersListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.EntryMembersListBox.Font = new System.Drawing.Font("Bahnschrift Light SemiCondensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EntryMembersListBox.ForeColor = System.Drawing.Color.White;
-            this.EntryMembersListBox.FormattingEnabled = true;
-            this.EntryMembersListBox.ItemHeight = 29;
-            this.EntryMembersListBox.Location = new System.Drawing.Point(37, 401);
-            this.EntryMembersListBox.Name = "EntryMembersListBox";
-            this.EntryMembersListBox.Size = new System.Drawing.Size(296, 118);
-            this.EntryMembersListBox.TabIndex = 16;
+            this.entryMembersListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.entryMembersListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.entryMembersListBox.Font = new System.Drawing.Font("Bahnschrift Light SemiCondensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.entryMembersListBox.ForeColor = System.Drawing.Color.White;
+            this.entryMembersListBox.FormattingEnabled = true;
+            this.entryMembersListBox.ItemHeight = 29;
+            this.entryMembersListBox.Location = new System.Drawing.Point(37, 401);
+            this.entryMembersListBox.Name = "entryMembersListBox";
+            this.entryMembersListBox.Size = new System.Drawing.Size(296, 118);
+            this.entryMembersListBox.TabIndex = 16;
             // 
             // removeSelectedPersonButton
             // 
@@ -169,6 +169,7 @@
             this.removeSelectedPersonButton.TabIndex = 17;
             this.removeSelectedPersonButton.Text = "Remove selected person";
             this.removeSelectedPersonButton.UseVisualStyleBackColor = false;
+            this.removeSelectedPersonButton.Click += new System.EventHandler(this.removeSelectedPersonButton_Click);
             // 
             // personCreatorGroupBox
             // 
@@ -351,7 +352,7 @@
             this.Controls.Add(this.createEntryButton);
             this.Controls.Add(this.personCreatorGroupBox);
             this.Controls.Add(this.removeSelectedPersonButton);
-            this.Controls.Add(this.EntryMembersListBox);
+            this.Controls.Add(this.entryMembersListBox);
             this.Controls.Add(this.addSelectedPersonButton);
             this.Controls.Add(this.selectPersonLabel);
             this.Controls.Add(this.selectPersonDropDown);
@@ -381,7 +382,7 @@
         private System.Windows.Forms.Button addSelectedPersonButton;
         private System.Windows.Forms.Label selectPersonLabel;
         private System.Windows.Forms.ComboBox selectPersonDropDown;
-        private System.Windows.Forms.ListBox EntryMembersListBox;
+        private System.Windows.Forms.ListBox entryMembersListBox;
         private System.Windows.Forms.Button removeSelectedPersonButton;
         private System.Windows.Forms.GroupBox personCreatorGroupBox;
         private System.Windows.Forms.Button personCreatorCreateAndAddButton;
