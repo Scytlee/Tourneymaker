@@ -43,10 +43,12 @@ namespace TMWinFormsUI
 
         private void WireUpLists()
         {
+            _availablePeople = _availablePeople.OrderBy(x => x.DisplayName).ToList();
             selectPersonDropDown.DataSource = null;
             selectPersonDropDown.DataSource = _availablePeople;
             selectPersonDropDown.DisplayMember = "DisplayName";
 
+            _selectedPeople = _selectedPeople.OrderBy(x => x.DisplayName).ToList();
             entryMembersListBox.DataSource = null;
             entryMembersListBox.DataSource = _selectedPeople;
             entryMembersListBox.DisplayMember = "DisplayName";
@@ -118,6 +120,7 @@ namespace TMWinFormsUI
             else
             {
                 // Show error message
+                // TODO Correct the message box
                 MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }");
             }
         }
@@ -157,24 +160,44 @@ namespace TMWinFormsUI
             }
         }
 
-        private void CreateEntryForm_Load(object sender, EventArgs e)
+        private void createEntryButton_Click(object sender, EventArgs e)
         {
+            // Validate the data in the form
+            if (ValidationHelper.ValidateEntryForm(out string errorMessage, entryNameValue.Text, _selectedPeople))
+            {
+                // Create the EntryModel
+                EntryModel entry = new EntryModel
+                {
+                    EntryName = entryNameValue.Text,
+                    EntryMembers = _selectedPeople
+                };
 
+                // Add the EntryModel to the database
+                GlobalConfig.Connection.CreateEntry(entry);
+
+                // Clear the form
+                ClearEntryForm();
+            }
+            else
+            {
+                // Show error message
+                // TODO Correct the message box
+                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }");
+            }
         }
 
-        private void entryNameValue_TextChanged(object sender, EventArgs e)
+        private void ClearEntryForm()
         {
+            entryNameValue.Text = "";
 
-        }
+            foreach (PersonModel person in _selectedPeople)
+            {
+                _availablePeople.Add(person);
+            }
 
-        private void selectEntryLabel_Click(object sender, EventArgs e)
-        {
+            _selectedPeople.Clear();
 
-        }
-
-        private void selectEntryDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            WireUpLists();
         }
     }
 }

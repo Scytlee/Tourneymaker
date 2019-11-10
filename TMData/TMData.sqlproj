@@ -72,6 +72,8 @@
     <Build Include="dbo\Tables\Tournaments.sql" />
     <Build Include="dbo\Stored Procedures\spPeople_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spPeople_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\spEntries_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spEntryMembers_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\TMData.publish.xml" />

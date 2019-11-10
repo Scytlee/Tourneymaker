@@ -75,7 +75,6 @@
             this.entryNameValue.Size = new System.Drawing.Size(328, 40);
             this.entryNameValue.TabIndex = 11;
             this.entryNameValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.entryNameValue.TextChanged += new System.EventHandler(this.entryNameValue_TextChanged);
             // 
             // entryNameLabel
             // 
@@ -126,7 +125,6 @@
             this.selectPersonLabel.Size = new System.Drawing.Size(182, 33);
             this.selectPersonLabel.TabIndex = 14;
             this.selectPersonLabel.Text = "Select person";
-            this.selectPersonLabel.Click += new System.EventHandler(this.selectEntryLabel_Click);
             // 
             // selectPersonDropDown
             // 
@@ -139,7 +137,6 @@
             this.selectPersonDropDown.Name = "selectPersonDropDown";
             this.selectPersonDropDown.Size = new System.Drawing.Size(328, 41);
             this.selectPersonDropDown.TabIndex = 13;
-            this.selectPersonDropDown.SelectedIndexChanged += new System.EventHandler(this.selectEntryDropDown_SelectedIndexChanged);
             // 
             // entryMembersListBox
             // 
@@ -342,6 +339,7 @@
             this.createEntryButton.TabIndex = 19;
             this.createEntryButton.Text = "Create entry";
             this.createEntryButton.UseVisualStyleBackColor = false;
+            this.createEntryButton.Click += new System.EventHandler(this.createEntryButton_Click);
             // 
             // CreateEntryForm
             // 
@@ -365,7 +363,6 @@
             this.Margin = new System.Windows.Forms.Padding(8);
             this.Name = "CreateEntryForm";
             this.Text = "Create Team";
-            this.Load += new System.EventHandler(this.CreateEntryForm_Load);
             this.personCreatorGroupBox.ResumeLayout(false);
             this.personCreatorGroupBox.PerformLayout();
             this.ResumeLayout(false);

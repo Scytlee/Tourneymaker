@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMLibrary.Models;
 
 namespace TMLibrary.Helpers
 {
@@ -29,44 +30,70 @@ namespace TMLibrary.Helpers
             }
 
             // Checking length of input data
-            if (nickname.Length > 50)
+            if (nickname?.Length > 50)
             {
                 output = false;
                 errorMessageBuilder.Append("\nNickname can be at most 50 characters long.");
             }
-            if (firstName.Length > 50)
+            if (firstName?.Length > 50)
             {
                 output = false;
                 errorMessageBuilder.Append("\nFirst name can be at most 50 characters long.");
             }
-            if (lastName.Length > 50)
+            if (lastName?.Length > 50)
             {
                 output = false;
                 errorMessageBuilder.Append("\nLast name can be at most 50 characters long.");
             }
-            if (discordTag.Length > 100)
+            if (discordTag?.Length > 100)
             {
                 output = false;
                 errorMessageBuilder.Append("\nDiscord tag can be at most 100 characters long.");
             }
-            if (emailAddress.Length > 200)
+            if (emailAddress?.Length > 200)
             {
                 output = false;
                 errorMessageBuilder.Append("\nEmail address can be at most 200 characters long.");
             }
 
-            // TODO Add error message box
             // TODO Check validity of Discord tag and email address
             // TODO Refactor validation
 
-            if (errorMessageBuilder.Length == 0)
+            errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
+
+            return output;
+        }
+
+        public static bool ValidateEntryForm(out string errorMessage, string entryName, List<PersonModel> entryMembers)
+        {
+            bool output = true;
+            StringBuilder errorMessageBuilder = new StringBuilder();
+
+            if (entryMembers.Count == 0)
             {
-                errorMessage = "";
+                output = false;
+                errorMessageBuilder.Append("\nEntry has to have at least 1 member.");
             }
-            else
+            if (entryMembers.Count == 1 && !string.IsNullOrWhiteSpace(entryName))
             {
-                errorMessage = errorMessageBuilder.ToString();
+                output = false;
+                errorMessageBuilder.Append("\nEntry name can be set only for entries with 2 or more members.");
             }
+            if (entryMembers.Count >= 2 && string.IsNullOrWhiteSpace(entryName))
+            {
+                output = false;
+                errorMessageBuilder.Append("\nYou have to specify entry name.");
+            }
+
+            if (entryName?.Length > 100)
+            {
+                output = false;
+                errorMessageBuilder.Append("\nEntry name can be at most 100 characters long.");
+            }
+
+            // TODO Refactor validation
+
+            errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
 
             return output;
         }

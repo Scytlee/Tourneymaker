@@ -12,6 +12,7 @@ namespace TMLibrary.DataAccess
             // Load the PersonModels text file and convert the text to List<PersonModel>
             List<PersonModel> people = LoadPersonModels();
 
+            // Find the max ID
             int currentId = 1;
 
             if (people.Count > 0)
@@ -19,11 +20,39 @@ namespace TMLibrary.DataAccess
                 currentId = people.OrderByDescending(x => x.Id).First().Id + 1;
             }
 
+            // Set ID for the person
             newPerson.Id = currentId;
 
+            // Add the person to the list
             people.Add(newPerson);
 
+            // Convert PersonModels to List<string>
+            // Save the List<string> to the PersonModels text file
             people.SaveToPersonModelsFile();
+        }
+
+        public void CreateEntry(EntryModel newEntry)
+        {
+            // Load the EntryModels text file and convert the text to List<EntryModel>
+            List<EntryModel> entries = GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
+
+            // Find the max ID
+            int currentId = 1;
+
+            if (entries.Count > 0)
+            {
+                currentId = entries.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            // Set ID for the entry
+            newEntry.Id = currentId;
+
+            // Add the entry to the list
+            entries.Add(newEntry);
+
+            // Convert EntryModels to List<string>
+            // Save the List<string> to the EntryModels text file
+            entries.SaveToEntryModelsFile();
         }
 
         public List<PersonModel> LoadPersonModels()

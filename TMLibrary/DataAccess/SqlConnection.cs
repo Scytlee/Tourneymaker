@@ -10,21 +10,44 @@ namespace TMLibrary.DataAccess
     {
         private const string databaseName = "TMData";
 
-        public void CreatePerson(PersonModel personModel)
+        public void CreatePerson(PersonModel newPerson)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("@Nickname", personModel.Nickname);
-                parameters.Add("@FirstName", personModel.FirstName);
-                parameters.Add("@LastName", personModel.LastName);
-                parameters.Add("@DiscordTag", personModel.DiscordTag);
-                parameters.Add("@EmailAddress", personModel.EmailAddress);
+                parameters.Add("@Nickname", newPerson.Nickname);
+                parameters.Add("@FirstName", newPerson.FirstName);
+                parameters.Add("@LastName", newPerson.LastName);
+                parameters.Add("@DiscordTag", newPerson.DiscordTag);
+                parameters.Add("@EmailAddress", newPerson.EmailAddress);
                 parameters.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spPeople_Insert", parameters, commandType: CommandType.StoredProcedure);
 
-                personModel.Id = parameters.Get<int>("@Id");
+                newPerson.Id = parameters.Get<int>("@Id");
+            }
+        }
+
+        public void CreateEntry(EntryModel newEntry)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@EntryName", newEntry.EntryName);
+                parameters.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spEntries_Insert", parameters, commandType: CommandType.StoredProcedure);
+
+                newEntry.Id = parameters.Get<int>("@Id");
+
+                foreach (PersonModel person in newEntry.EntryMembers)
+                {
+                    parameters = new DynamicParameters();
+                    parameters.Add("@EntryId", newEntry.Id);
+                    parameters.Add("@PersonId", person.Id);
+
+                    connection.Execute("dbo.spEntryMembers_Insert", parameters, commandType: CommandType.StoredProcedure);
+                }
             }
         }
 
