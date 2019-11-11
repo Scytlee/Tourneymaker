@@ -19,7 +19,7 @@ namespace TMWinFormsUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Initialize the database connections
-            GlobalConfig.InitializeConnection(ConnectionType.SqlDatabase);
+            GlobalConfig.InitializeConnection(ConnectionType.TextFile);
 
             Application.Run(new TournamentDashboardForm());
         }

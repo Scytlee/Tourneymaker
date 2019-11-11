@@ -97,5 +97,10 @@ namespace TMLibrary.DataAccess
         {
             return GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
         }
+
+        public void UpdateMatchup(MatchupModel matchup)
+        {
+            matchup.UpdateMatchupInFile();
+        }
     }
 }

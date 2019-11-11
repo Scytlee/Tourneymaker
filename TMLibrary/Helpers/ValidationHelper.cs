@@ -127,5 +127,59 @@ namespace TMLibrary.Helpers
 
             return output;
         }
+
+        public static bool ValidateUpdateScoreForm(out string errorMessage, string entryOneScore, string entryTwoScore)
+        {
+            bool output = true;
+            StringBuilder errorMessageBuilder = new StringBuilder();
+
+            bool isScoreOneValid = false;
+            bool isScoreTwoValid = false;
+            double scoreOne = 0;
+            double scoreTwo = 0;
+
+            if (string.IsNullOrWhiteSpace(entryOneScore))
+            {
+                output = false;
+                errorMessageBuilder.Append("\nYou have to specify score of the first entry.");
+            }
+            else
+            {
+                isScoreOneValid = double.TryParse(entryOneScore, out scoreOne);
+
+                if (!isScoreOneValid)
+                {
+                    output = false;
+                    errorMessageBuilder.Append("\nScore of the first entry is not a valid number.");
+                }
+            }
+            if (string.IsNullOrWhiteSpace(entryTwoScore))
+            {
+                output = false;
+                errorMessageBuilder.Append("\nYou have to specify score of the second entry.");
+            }
+            else
+            {
+                isScoreTwoValid = double.TryParse(entryTwoScore, out scoreTwo);
+
+                if (!isScoreTwoValid)
+                {
+                    output = false;
+                    errorMessageBuilder.Append("\nScore of the second entry is not a valid number.");
+                }
+            }
+
+            if (isScoreOneValid && isScoreTwoValid && scoreOne == scoreTwo)
+            {
+                output = false;
+                errorMessageBuilder.Append("\nThe matchup cannot result in a tie.");
+            }
+
+            // TODO String length validation
+
+            errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
+
+            return output;
+        }
     }
 }

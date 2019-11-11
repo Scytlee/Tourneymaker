@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace TMLibrary.Models
 {
@@ -31,5 +32,41 @@ namespace TMLibrary.Models
         /// Which round this match is a part of.
         /// </summary>
         public int MatchupRound { get; set; }
+
+        public string DisplayName
+        {
+            get
+            {
+                string output = "";
+
+                foreach (MatchupEntryModel matchupEntry in MatchupEntries)
+                {
+                    if (output.Length == 0)
+                    {
+                        if (matchupEntry.EntryCompeting == null)
+                        {
+                            output = "TBD";
+                        }
+                        else
+                        {
+                            output = matchupEntry.EntryCompeting.DisplayName;
+                        }
+                    }
+                    else
+                    {
+                        if (matchupEntry.EntryCompeting == null)
+                        {
+                            output += " -vs- TBD";
+                        }
+                        else
+                        {
+                            output += $" -vs- { matchupEntry.EntryCompeting.DisplayName }";
+                        }
+                    }
+                }
+
+                return output;
+            }
+        }
     }
 }

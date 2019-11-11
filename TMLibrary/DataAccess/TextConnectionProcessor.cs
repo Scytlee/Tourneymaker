@@ -357,6 +357,73 @@ namespace TMLibrary.DataAccess.TextHelpers
             File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), lines);
         }
 
+        public static void UpdateMatchupInFile(this MatchupModel updatedMatchup)
+        {
+            // [Id],(MatchupEntries)[Id|Id|Id],(Winner)[Id],[MatchupRound]
+
+            List<MatchupModel> matchups = GlobalConfig.MatchupsFile.FullFilePath().LoadFile().ConvertToMatchupModels();
+
+            MatchupModel outdatedMatchup = matchups.First(x => x.Id == updatedMatchup.Id);
+
+            matchups.Remove(outdatedMatchup);
+            matchups.Add(updatedMatchup);
+
+            foreach (MatchupEntryModel matchupEntry in updatedMatchup.MatchupEntries)
+            {
+                matchupEntry.UpdateEntryInFile();
+            }
+
+            // save to file
+            List<string> lines = new List<string>();
+
+            foreach (MatchupModel m in matchups)
+            {
+                string winner = "";
+                if (m.Winner != null)
+                {
+                    winner = m.Winner.Id.ToString();
+                }
+
+                lines.Add($"{ m.Id },{ ConvertMatchupEntriesListToString(m.MatchupEntries) },{ winner },{ m.MatchupRound }");
+            }
+
+            File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), lines);
+        }
+
+        public static void UpdateEntryInFile(this MatchupEntryModel updatedMatchupEntry)
+        {
+            // [Id],(EntryCompeting)[Id],[Score],(ParentMatchup)[Id]
+
+            List<MatchupEntryModel> matchupEntries =
+                GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+
+            MatchupEntryModel outdatedMatchupEntry = matchupEntries.First(x => x.Id == updatedMatchupEntry.Id);
+
+            matchupEntries.Remove(outdatedMatchupEntry);
+            matchupEntries.Add(updatedMatchupEntry);
+
+            List<string> lines = new List<string>();
+
+            foreach (MatchupEntryModel me in matchupEntries)
+            {
+                string entryCompeting = "";
+                if (me.EntryCompeting != null)
+                {
+                    entryCompeting = me.EntryCompeting.Id.ToString();
+                }
+
+                string parentMatchup = "";
+                if (me.ParentMatchup != null)
+                {
+                    parentMatchup = me.ParentMatchup.Id.ToString();
+                }
+
+                lines.Add($"{ me.Id },{ entryCompeting },{ me.Score },{ parentMatchup }");
+            }
+
+            File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), lines);
+        }
+
         public static void SaveOneToMatchupEntryModelsFile(this MatchupEntryModel matchupEntry)
         {
             // [Id],(EntryCompeting)[Id],[Score],(ParentMatchup)[Id]

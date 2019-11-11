@@ -27,15 +27,15 @@ namespace TMWinFormsUI
 
         private void WireUpLists()
         {
-            _availableEntries = _availableEntries.OrderBy(x => x.DisplayName).ToList();
+            _availableEntries = _availableEntries.OrderBy(x => x.DisplayNameWithTag).ToList();
             selectEntryDropDown.DataSource = null;
             selectEntryDropDown.DataSource = _availableEntries;
-            selectEntryDropDown.DisplayMember = nameof(EntryModel.DisplayName);
+            selectEntryDropDown.DisplayMember = nameof(EntryModel.DisplayNameWithTag);
 
-            _selectedEntries = _selectedEntries.OrderBy(x => x.DisplayName).ToList();
+            _selectedEntries = _selectedEntries.OrderBy(x => x.DisplayNameWithTag).ToList();
             tournamentEntriesListBox.DataSource = null;
             tournamentEntriesListBox.DataSource = _selectedEntries;
-            tournamentEntriesListBox.DisplayMember = nameof(EntryModel.DisplayName);
+            tournamentEntriesListBox.DisplayMember = nameof(EntryModel.DisplayNameWithTag);
         }
 
         private void addSelectedEntryButton_Click(object sender, EventArgs e)
@@ -95,6 +95,14 @@ namespace TMWinFormsUI
                 // Create Tournament entry
                 // Create all TournamentEntries
                 GlobalConfig.Connection.CreateTournament(tournament);
+
+                // Handle bye matchups
+                TournamentLogic.HandleByeMatchups(tournament);
+
+                // Open the TournamentViewerForm and close this form
+                TournamentViewerForm form = new TournamentViewerForm(tournament);
+                form.Show();
+                this.Close();
             }
             else
             {

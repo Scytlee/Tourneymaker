@@ -8,11 +8,11 @@ namespace TMLibrary.DataAccess
 {
     public class SqlConnection : IDataConnection
     {
-        private const string databaseName = "TMData";
+        private const string _databaseName = "TMData";
 
         public void CreatePerson(PersonModel newPerson)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Nickname", newPerson.Nickname);
@@ -30,7 +30,7 @@ namespace TMLibrary.DataAccess
 
         public void CreateEntry(EntryModel newEntry)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@EntryName", newEntry.EntryName);
@@ -53,7 +53,7 @@ namespace TMLibrary.DataAccess
 
         public void CreateTournament(TournamentModel newTournament)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
                 SaveTournament(newTournament, connection);
 
@@ -127,7 +127,7 @@ namespace TMLibrary.DataAccess
         {
             List<PersonModel> output;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
                 output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();
             }
@@ -139,7 +139,7 @@ namespace TMLibrary.DataAccess
         {
             List<EntryModel> output;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
                 output = connection.Query<EntryModel>("dbo.spEntries_GetAll").ToList();
 
@@ -159,7 +159,7 @@ namespace TMLibrary.DataAccess
         {
             List<TournamentModel> output;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(databaseName)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
                 output = connection.Query<TournamentModel>("dbo.spTournaments_GetActive").ToList();
 
@@ -235,6 +235,35 @@ namespace TMLibrary.DataAccess
             }
 
             return output;
+        }
+
+        public void UpdateMatchup(MatchupModel matchup)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
+            {
+                var parameters = new DynamicParameters();
+                if (matchup.Winner != null)
+                {
+                    parameters.Add("@Id", matchup.Id);
+                    parameters.Add("@WinnerId", matchup.Winner.Id);
+
+                    connection.Execute("dbo.spMatchups_Update", parameters, commandType: CommandType.StoredProcedure); 
+                }
+
+                foreach (MatchupEntryModel matchupEntry in matchup.MatchupEntries)
+                {
+                    if (matchupEntry.EntryCompeting != null)
+                    {
+                        parameters = new DynamicParameters();
+                        parameters.Add("@Id", matchupEntry.Id);
+                        parameters.Add("@EntryCompetingId", matchupEntry.EntryCompeting.Id);
+                        parameters.Add("@Score", matchupEntry.Score);
+
+                        connection.Execute("dbo.spMatchupEntries_Update", parameters, commandType: CommandType.StoredProcedure); 
+                    }
+                }
+            }
+
         }
     }
 }

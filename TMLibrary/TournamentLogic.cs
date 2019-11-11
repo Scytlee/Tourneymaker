@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -111,6 +112,85 @@ namespace TMLibrary
         public static List<EntryModel> RandomizeEntriesOrder(List<EntryModel> entries)
         {
             return entries.OrderBy(x => Guid.NewGuid()).ToList();
+        }
+
+        public static void UpdateTournament(TournamentModel tournament, MatchupModel matchup, string scoreOne, string scoreTwo)
+        {
+            UpdateMatchupScores(matchup, scoreOne, scoreTwo);
+
+            DetermineWinner(matchup);
+
+            AdvanceWinner(tournament, matchup);
+
+            GlobalConfig.Connection.UpdateMatchup(matchup);
+        }
+
+        private static void AdvanceWinner(TournamentModel tournament, MatchupModel matchup)
+        {
+            foreach (List<MatchupModel> round in tournament.Rounds)
+            {
+                foreach (MatchupModel roundMatchup in round)
+                {
+                    foreach (MatchupEntryModel matchupEntry in roundMatchup.MatchupEntries)
+                    {
+                        if (matchupEntry.ParentMatchup?.Id == matchup.Id)
+                        {
+                            matchupEntry.EntryCompeting = matchup.Winner;
+                            GlobalConfig.Connection.UpdateMatchup(roundMatchup);
+                        }
+                    }
+                } 
+            }
+        }
+
+        private static void UpdateMatchupScores(MatchupModel matchup, string scoreOne, string scoreTwo)
+        {
+            matchup.MatchupEntries[0].Score = double.Parse(scoreOne);
+            matchup.MatchupEntries[1].Score = double.Parse(scoreTwo);
+        }
+
+        private static void DetermineWinner(MatchupModel matchup)
+        {
+            string greaterWins = ConfigurationManager.AppSettings["greaterScoreWins"];
+
+            if (matchup.MatchupEntries.Count == 1)
+            {
+                matchup.Winner = matchup.MatchupEntries[0].EntryCompeting;
+            }
+            else if (matchup.MatchupEntries.Count == 2)
+            {
+                if (greaterWins == "1")
+                {
+                    matchup.Winner = matchup.MatchupEntries[0].Score > matchup.MatchupEntries[1].Score ? matchup.MatchupEntries[0].EntryCompeting : matchup.MatchupEntries[1].EntryCompeting;
+                }
+                else if (greaterWins == "0")
+                {
+                    matchup.Winner = matchup.MatchupEntries[0].Score < matchup.MatchupEntries[1].Score ? matchup.MatchupEntries[0].EntryCompeting : matchup.MatchupEntries[1].EntryCompeting;
+                }
+                else
+                {
+                    throw new Exception("Invalid value of option \"greaterWins\".");
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public static void HandleByeMatchups(TournamentModel tournament)
+        {
+            foreach (MatchupModel matchup in tournament.Rounds[0])
+            {
+                if (matchup.MatchupEntries.Count == 1)
+                {
+                    DetermineWinner(matchup);
+
+                    AdvanceWinner(tournament, matchup);
+
+                    GlobalConfig.Connection.UpdateMatchup(matchup);
+                }
+            }
         }
     }
 }

@@ -20,6 +20,22 @@ namespace TMLibrary.Models
                 // If not - the entry is a team
                 else
                 {
+                    return EntryName;
+                }
+            }
+        }
+        public string DisplayNameWithTag
+        {
+            get
+            {
+                // Empty name - 1 person in the entry
+                if (string.IsNullOrWhiteSpace(EntryName))
+                {
+                    return EntryMembers[0].DisplayName;
+                }
+                // If not - the entry is a team
+                else
+                {
                     return $"{ EntryName } [T]";
                 }
             }

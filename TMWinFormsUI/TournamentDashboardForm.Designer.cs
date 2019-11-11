@@ -85,6 +85,7 @@
             this.loadTournamentButton.TabIndex = 16;
             this.loadTournamentButton.Text = "Load";
             this.loadTournamentButton.UseVisualStyleBackColor = false;
+            this.loadTournamentButton.Click += new System.EventHandler(this.loadTournamentButton_Click);
             // 
             // createNewTournamentButton
             // 
