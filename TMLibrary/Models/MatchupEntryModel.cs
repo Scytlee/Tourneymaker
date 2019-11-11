@@ -11,6 +11,11 @@
         public int Id { get; set; }
 
         /// <summary>
+        /// The unique identifier for the entry.
+        /// </summary>
+        public int EntryCompetingId { get; set; }
+
+        /// <summary>
         /// Represents one entry in the matchup.
         /// </summary>
         public EntryModel EntryCompeting { get; set; }
@@ -19,6 +24,11 @@
         /// Represents the score for this particular entry.
         /// </summary>
         public double Score { get; set; }
+
+        /// <summary>
+        /// The unique identifier for the parent matchup (entry).
+        /// </summary>
+        public int ParentMatchupId { get; set; }
 
         /// <summary>
         /// Represents the matchup that this entry came from as the winner.

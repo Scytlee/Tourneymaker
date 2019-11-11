@@ -18,6 +18,11 @@ namespace TMLibrary.Models
         public List<MatchupEntryModel> MatchupEntries { get; set; } = new List<MatchupEntryModel>();
 
         /// <summary>
+        /// The ID from the database that will be used to identify the winner.
+        /// </summary>
+        public int WinnerId { get; set; }
+
+        /// <summary>
         /// The winner of the match.
         /// </summary>
         public EntryModel Winner { get; set; }

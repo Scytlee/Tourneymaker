@@ -101,6 +101,7 @@
             this.createNewTournamentButton.TabIndex = 18;
             this.createNewTournamentButton.Text = "Create new tournament";
             this.createNewTournamentButton.UseVisualStyleBackColor = false;
+            this.createNewTournamentButton.Click += new System.EventHandler(this.createNewTournamentButton_Click);
             // 
             // TournamentDashboardForm
             // 
@@ -115,7 +116,7 @@
             this.Controls.Add(this.headerLabel);
             this.Font = new System.Drawing.Font("Bahnschrift SemiLight", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Margin = new System.Windows.Forms.Padding(8);
             this.Name = "TournamentDashboardForm";
             this.Text = "Tourneymaker";
             this.ResumeLayout(false);

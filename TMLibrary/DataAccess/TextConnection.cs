@@ -91,5 +91,11 @@ namespace TMLibrary.DataAccess
         {
             return GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
         }
+
+        // TODO Refactor so it actually loads only active tourneys
+        public List<TournamentModel> LoadActiveTournamentModels()
+        {
+            return GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+        }
     }
 }
