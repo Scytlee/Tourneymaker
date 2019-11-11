@@ -12,6 +12,9 @@ namespace TMLibrary
     {
         public const string PeopleFile = "PersonModels.csv";
         public const string EntriesFile = "EntryModels.csv";
+        public const string TournamentsFile = "TournamentModels.csv";
+        public const string MatchupsFile = "MatchupModels.csv";
+        public const string MatchupEntriesFile = "MatchupEntryModels.csv";
 
         public static IDataConnection Connection { get; private set; }
 
@@ -19,13 +22,11 @@ namespace TMLibrary
         {
             if (connectionType == ConnectionType.SqlDatabase)
             {
-                // TODO - Set up the SQL connection
                 SqlConnection sqlConnection = new SqlConnection();
                 Connection = sqlConnection;
             }
             else if (connectionType == ConnectionType.TextFile)
             {
-                // TODO - Set up the text connection
                 TextConnection textConnection = new TextConnection();
                 Connection = textConnection;
             }

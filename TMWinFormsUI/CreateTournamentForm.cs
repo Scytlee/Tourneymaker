@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TMLibrary;
+using TMLibrary.Helpers;
 using TMLibrary.Models;
 
 namespace TMWinFormsUI
@@ -26,29 +27,19 @@ namespace TMWinFormsUI
 
         private void WireUpLists()
         {
-            _availableEntries = _availableEntries.OrderBy(x => x.EntryName).ToList();
+            _availableEntries = _availableEntries.OrderBy(x => x.DisplayName).ToList();
             selectEntryDropDown.DataSource = null;
             selectEntryDropDown.DataSource = _availableEntries;
-            selectEntryDropDown.DisplayMember = nameof(EntryModel.EntryName);
+            selectEntryDropDown.DisplayMember = nameof(EntryModel.DisplayName);
 
-            _selectedEntries = _selectedEntries.OrderBy(x => x.EntryName).ToList();
+            _selectedEntries = _selectedEntries.OrderBy(x => x.DisplayName).ToList();
             tournamentEntriesListBox.DataSource = null;
             tournamentEntriesListBox.DataSource = _selectedEntries;
-            tournamentEntriesListBox.DisplayMember = nameof(EntryModel.EntryName);
+            tournamentEntriesListBox.DisplayMember = nameof(EntryModel.DisplayName);
         }
 
         private void addSelectedEntryButton_Click(object sender, EventArgs e)
         {
-            //PersonModel person = (PersonModel) selectPersonDropDown.SelectedItem;
-
-            //if (person != null)
-            //{
-            //    _availablePeople.Remove(person);
-            //    _selectedPeople.Add(person);
-
-            //    WireUpLists();
-            //}
-
             EntryModel entry = (EntryModel) selectEntryDropDown.SelectedItem;
 
             if (entry != null)
@@ -83,6 +74,32 @@ namespace TMWinFormsUI
                 _availableEntries.Add(entry);
 
                 WireUpLists();
+            }
+        }
+
+        private void createTournamentButton_Click(object sender, EventArgs e)
+        {
+            // Validate the data in the form
+            if (ValidationHelper.ValidateTournamentForm(out string errorMessage, tournamentNameValue.Text, _selectedEntries))
+            {
+                // Create the TournamentModel
+                TournamentModel tournament = new TournamentModel
+                {
+                    TournamentName = tournamentNameValue.Text,
+                    TournamentEntries = _selectedEntries
+                };
+
+                // Wire up matchups
+                TournamentLogic.CreateRounds(tournament);
+
+                // Create Tournament entry
+                // Create all TournamentEntries
+                GlobalConfig.Connection.CreateTournament(tournament);
+            }
+            else
+            {
+                // Show error message
+                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -89,8 +89,7 @@ namespace TMWinFormsUI
             else
             {
                 // Show error message
-                // TODO Correct the message
-                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }");
+                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -124,8 +123,7 @@ namespace TMWinFormsUI
             else
             {
                 // Show error message
-                // TODO Correct the message box
-                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }");
+                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -188,8 +186,7 @@ namespace TMWinFormsUI
             else
             {
                 // Show error message
-                // TODO Correct the message box
-                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }");
+                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

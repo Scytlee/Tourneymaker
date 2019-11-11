@@ -97,5 +97,35 @@ namespace TMLibrary.Helpers
 
             return output;
         }
+
+        public static bool ValidateTournamentForm(out string errorMessage, string tournamentName,
+            List<EntryModel> tournamentEntries)
+        {
+            bool output = true;
+            StringBuilder errorMessageBuilder = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(tournamentName))
+            {
+                output = false;
+                errorMessageBuilder.Append("\nYou have to specify tournament name.");
+            }
+            if (tournamentEntries.Count < 2)
+            {
+                output = false;
+                errorMessageBuilder.Append("\nTournament has to have at least 2 entries.");
+            }
+
+            if (tournamentName?.Length > 100)
+            {
+                output = false;
+                errorMessageBuilder.Append("\nTournament name can be at most 100 characters long.");
+            }
+
+            // TODO Refactor validation
+
+            errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
+
+            return output;
+        }
     }
 }

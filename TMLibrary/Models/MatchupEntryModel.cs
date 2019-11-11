@@ -1,7 +1,15 @@
 ﻿namespace TMLibrary.Models
 {
+    /// <summary>
+    /// Represents one entry in a matchup.
+    /// </summary>
     public class MatchupEntryModel
     {
+        /// <summary>
+        /// The unique identifier for the matchup entry.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Represents one entry in the matchup.
         /// </summary>

@@ -35,6 +35,9 @@
         /// </summary>
         public string EmailAddress { get; set; }
 
+        /// <summary>
+        /// The display name for the person - full name, nickname, or both.
+        /// </summary>
         public string DisplayName
         {
             get

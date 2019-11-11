@@ -77,6 +77,10 @@
     <Build Include="dbo\Stored Procedures\spEntries_GetByTournament.sql" />
     <Build Include="dbo\Stored Procedures\spEntries_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\spEntryMembers_GetByEntry.sql" />
+    <Build Include="dbo\Stored Procedures\spTournaments_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spTournamentEntries_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spMatchups_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spMatchupEntries_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\TMData.publish.xml" />

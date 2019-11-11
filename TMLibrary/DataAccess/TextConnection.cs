@@ -28,7 +28,7 @@ namespace TMLibrary.DataAccess
 
             // Convert PersonModels to List<string>
             // Save the List<string> to the PersonModels text file
-            people.SaveToPersonModelsFile();
+            people.SaveAllToPersonModelsFile();
         }
 
         public void CreateEntry(EntryModel newEntry)
@@ -52,7 +52,34 @@ namespace TMLibrary.DataAccess
 
             // Convert EntryModels to List<string>
             // Save the List<string> to the EntryModels text file
-            entries.SaveToEntryModelsFile();
+            entries.SaveAllToEntryModelsFile();
+        }
+
+        public void CreateTournament(TournamentModel newTournament)
+        {
+            // Load the TournamentModels text file and convert the text to List<TournamentModel>
+            List<TournamentModel> tournaments =
+                GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+
+            // Find the max ID
+            int currentId = 1;
+
+            if (tournaments.Count > 0)
+            {
+                currentId = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            // Set ID for the entry
+            newTournament.Id = currentId;
+
+            newTournament.SaveRounds();
+
+            // Add the entry to the list
+            tournaments.Add(newTournament);
+
+            // Convert TournamentModels to List<string>
+            // Save the List<string> to the TournamentModels text file
+            tournaments.SaveAllToTournamentModelsFile();
         }
 
         public List<PersonModel> LoadPersonModels()
