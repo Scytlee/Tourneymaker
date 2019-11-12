@@ -14,7 +14,7 @@ namespace TMWinFormsUI
 {
     public partial class TournamentDashboardForm : Form
     {
-        private List<TournamentModel> _activeTournaments = GlobalConfig.Connection.LoadActiveTournamentModels();
+        private List<TournamentModel> _tournaments = GlobalConfig.Connection.LoadTournamentModels();
 
         public TournamentDashboardForm()
         {
@@ -25,7 +25,7 @@ namespace TMWinFormsUI
 
         private void WireUpLists()
         {
-            loadTournamentDropDown.DataSource = _activeTournaments;
+            loadTournamentDropDown.DataSource = _tournaments;
             loadTournamentDropDown.DisplayMember = nameof(TournamentModel.TournamentName);
         }
 

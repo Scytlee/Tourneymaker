@@ -86,7 +86,9 @@ namespace TMWinFormsUI
                 TournamentModel tournament = new TournamentModel
                 {
                     TournamentName = tournamentNameValue.Text,
-                    TournamentEntries = _selectedEntries
+                    TournamentEntries = _selectedEntries,
+                    Active = 0,
+                    CurrentRound = 0
                 };
 
                 // Wire up matchups

@@ -71,6 +71,7 @@
             this.entryNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.entryNameValue.ForeColor = System.Drawing.Color.White;
             this.entryNameValue.Location = new System.Drawing.Point(21, 121);
+            this.entryNameValue.MaxLength = 100;
             this.entryNameValue.Name = "entryNameValue";
             this.entryNameValue.Size = new System.Drawing.Size(328, 40);
             this.entryNameValue.TabIndex = 11;
@@ -229,6 +230,7 @@
             this.personCreatorEmailAddressValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.personCreatorEmailAddressValue.ForeColor = System.Drawing.Color.White;
             this.personCreatorEmailAddressValue.Location = new System.Drawing.Point(161, 251);
+            this.personCreatorEmailAddressValue.MaxLength = 200;
             this.personCreatorEmailAddressValue.Name = "personCreatorEmailAddressValue";
             this.personCreatorEmailAddressValue.Size = new System.Drawing.Size(247, 40);
             this.personCreatorEmailAddressValue.TabIndex = 26;
@@ -249,6 +251,7 @@
             this.personCreatorDiscordTagValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.personCreatorDiscordTagValue.ForeColor = System.Drawing.Color.White;
             this.personCreatorDiscordTagValue.Location = new System.Drawing.Point(161, 202);
+            this.personCreatorDiscordTagValue.MaxLength = 100;
             this.personCreatorDiscordTagValue.Name = "personCreatorDiscordTagValue";
             this.personCreatorDiscordTagValue.Size = new System.Drawing.Size(247, 40);
             this.personCreatorDiscordTagValue.TabIndex = 24;
@@ -269,6 +272,7 @@
             this.personCreatorLastNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.personCreatorLastNameValue.ForeColor = System.Drawing.Color.White;
             this.personCreatorLastNameValue.Location = new System.Drawing.Point(161, 153);
+            this.personCreatorLastNameValue.MaxLength = 50;
             this.personCreatorLastNameValue.Name = "personCreatorLastNameValue";
             this.personCreatorLastNameValue.Size = new System.Drawing.Size(247, 40);
             this.personCreatorLastNameValue.TabIndex = 22;
@@ -289,6 +293,7 @@
             this.personCreatorFirstNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.personCreatorFirstNameValue.ForeColor = System.Drawing.Color.White;
             this.personCreatorFirstNameValue.Location = new System.Drawing.Point(161, 104);
+            this.personCreatorFirstNameValue.MaxLength = 50;
             this.personCreatorFirstNameValue.Name = "personCreatorFirstNameValue";
             this.personCreatorFirstNameValue.Size = new System.Drawing.Size(247, 40);
             this.personCreatorFirstNameValue.TabIndex = 20;
@@ -309,6 +314,7 @@
             this.personCreatorNicknameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.personCreatorNicknameValue.ForeColor = System.Drawing.Color.White;
             this.personCreatorNicknameValue.Location = new System.Drawing.Point(161, 55);
+            this.personCreatorNicknameValue.MaxLength = 50;
             this.personCreatorNicknameValue.Name = "personCreatorNicknameValue";
             this.personCreatorNicknameValue.Size = new System.Drawing.Size(247, 40);
             this.personCreatorNicknameValue.TabIndex = 19;

@@ -12,6 +12,7 @@ namespace TMLibrary
 {
     public static class TournamentLogic
     {
+
         public static void CreateRounds(TournamentModel tournament)
         {
             // Randomize order of the entries list
@@ -122,7 +123,77 @@ namespace TMLibrary
 
             AdvanceWinner(tournament, matchup);
 
+            CheckRoundStatus(tournament);
+
             GlobalConfig.Connection.UpdateMatchup(matchup);
+        }
+
+        public static void CheckRoundStatus(TournamentModel tournament)
+        {
+            List<MatchupModel> currentRound = tournament.Rounds[tournament.CurrentRound - 1];
+
+            foreach (MatchupModel matchup in currentRound)
+            {
+                if (matchup.Winner == null)
+                {
+                    return;
+                }
+            }
+
+            if (tournament.CurrentRound == tournament.Rounds.Count)
+            {
+                tournament.CompleteTournament();
+            }
+            else
+            {
+                tournament.CompleteRound();
+            }
+        }
+
+        public static bool ProgressTournament(TournamentModel tournament)
+        {
+            bool isCompleted;
+
+            tournament.CurrentRound++;
+
+            if (tournament.Active == 0)
+            {
+                // Tournament start
+                tournament.Active = 1;
+                isCompleted = false;
+                // Send starting messages
+            }
+            else if (tournament.Active == 1 && tournament.CurrentRound > tournament.Rounds.Count)
+            {
+                // Tournament completion
+                tournament.Active = 0;
+                isCompleted = true;
+                // Send final messages
+            }
+            else
+            {
+                // Tournament progress
+                isCompleted = false;
+                // Send round advance messages
+            }
+
+            GlobalConfig.Connection.UpdateTournament(tournament);
+
+            return isCompleted;
+        }
+
+        private static void CompleteTournament(TournamentModel tournament)
+        {
+            tournament.Active = 0;
+
+            // TODO Messaging
+        }
+
+        private static void CompleteRound(TournamentModel tournament)
+        {
+            tournament.CurrentRound++;
+
+            // TODO Messaging
         }
 
         private static void AdvanceWinner(TournamentModel tournament, MatchupModel matchup)

@@ -81,13 +81,15 @@
     <Build Include="dbo\Stored Procedures\spTournamentEntries_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spMatchups_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spMatchupEntries_Insert.sql" />
-    <Build Include="dbo\Stored Procedures\spTournaments_GetActive.sql" />
+    <Build Include="dbo\Stored Procedures\spTournaments_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\spMatchups_GetByTournament.sql" />
     <Build Include="dbo\Stored Procedures\spMatchupEntries_GetByMatchup.sql" />
     <Build Include="dbo\Stored Procedures\spMatchups_Update.sql" />
     <Build Include="dbo\Stored Procedures\spMatchupEntries_Update.sql" />
+    <Build Include="dbo\Stored Procedures\spTournaments_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\TMData.publish.xml" />
+    <None Include="PublishLocations\_ASUS_TMData.publish.xml" />
   </ItemGroup>
 </Project>

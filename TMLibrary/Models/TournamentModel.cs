@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TMLibrary.Models
 {
@@ -7,6 +8,10 @@ namespace TMLibrary.Models
     /// </summary>
     public class TournamentModel
     {
+        public event EventHandler OnRoundComplete;
+
+        public event EventHandler OnTournamentComplete;
+
         /// <summary>
         /// The unique identifier for the tournament.
         /// </summary>
@@ -28,8 +33,29 @@ namespace TMLibrary.Models
         public List<List<MatchupModel>> Rounds { get; set; } = new List<List<MatchupModel>>();
 
         /// <summary>
-        /// The current round of the tournament.
+        /// Together with CurrentRound property determines status of the tournament
+        /// Active = 0 && CurrentRound = 0 -> tournament not yet started
+        /// Active = 0 && CurrentRound = Rounds.Count + 1 -> tournament finished
+        /// Active = 1 && CurrentRound between 1 and Rounds.Count -> tournament in progress
+        /// </summary>
+        public int Active { get; set; }
+
+        /// <summary>
+        /// Together with Active property determines status of the tournament
+        /// Active = 0 && CurrentRound = 0 -> tournament not yet started
+        /// Active = 0 && CurrentRound = Rounds.Count + 1 -> tournament finished
+        /// Active = 1 && CurrentRound between 1 and Rounds.Count -> tournament in progress
         /// </summary>
         public int CurrentRound { get; set; }
+
+        public void CompleteRound()
+        {
+            OnRoundComplete?.Invoke(this, null);
+        }
+
+        public void CompleteTournament()
+        {
+            OnTournamentComplete?.Invoke(this, null);
+        }
     }
 }

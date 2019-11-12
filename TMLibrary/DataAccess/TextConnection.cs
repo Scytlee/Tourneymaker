@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TMLibrary.DataAccess.TextHelpers;
+using TMLibrary.Helpers;
 using TMLibrary.Models;
 
 namespace TMLibrary.DataAccess
@@ -92,8 +92,7 @@ namespace TMLibrary.DataAccess
             return GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
         }
 
-        // TODO Refactor so it actually loads only active tourneys
-        public List<TournamentModel> LoadActiveTournamentModels()
+        public List<TournamentModel> LoadTournamentModels()
         {
             return GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
         }
@@ -101,6 +100,11 @@ namespace TMLibrary.DataAccess
         public void UpdateMatchup(MatchupModel matchup)
         {
             matchup.UpdateMatchupInFile();
+        }
+
+        public void UpdateTournament(TournamentModel tournament)
+        {
+            tournament.UpdateTournamentInFile();
         }
     }
 }

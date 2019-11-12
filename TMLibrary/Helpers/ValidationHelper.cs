@@ -9,6 +9,18 @@ namespace TMLibrary.Helpers
 {
     public static class ValidationHelper
     {
+        private static string NoValueMessage(string valueName)
+        {
+            valueName = $"{ valueName.Substring(0, 1).ToLower() }{ valueName.Substring(1) }";
+            return $"\nYou have to specify { valueName }.";
+        }
+
+        private static string TooLongValueMessage(string valueName, int valueLength)
+        {
+            valueName = $"{ valueName.Substring(0, 1).ToUpper() }{ valueName.Substring(1) }";
+            return $"\n{ valueName } can be at most { valueLength } characters long.";
+        }
+
         public static bool ValidatePersonCreatorForm(out string errorMessage, string nickname, string firstName,
             string lastName, string discordTag, string emailAddress)
         {
@@ -19,45 +31,44 @@ namespace TMLibrary.Helpers
             if (string.IsNullOrWhiteSpace(nickname) && (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)))
             {
                 output = false;
-                errorMessageBuilder.Append("\nYou have to specify either nickname or first and last name of the person.");
+                errorMessageBuilder.Append(NoValueMessage("either nickname or full name"));
             }
 
             // Checking communication way with the person
             if (string.IsNullOrWhiteSpace(discordTag) && string.IsNullOrWhiteSpace(emailAddress))
             {
                 output = false;
-                errorMessageBuilder.Append("\nYou have to specify either Discord tag or email address of the person.");
+                errorMessageBuilder.Append(NoValueMessage("either Discord tag or email address"));
             }
 
             // Checking length of input data
             if (nickname?.Length > 50)
             {
                 output = false;
-                errorMessageBuilder.Append("\nNickname can be at most 50 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("nickname", 50));
             }
             if (firstName?.Length > 50)
             {
                 output = false;
-                errorMessageBuilder.Append("\nFirst name can be at most 50 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("first name", 50));
             }
             if (lastName?.Length > 50)
             {
                 output = false;
-                errorMessageBuilder.Append("\nLast name can be at most 50 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("last name", 50));
             }
             if (discordTag?.Length > 100)
             {
                 output = false;
-                errorMessageBuilder.Append("\nDiscord tag can be at most 100 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("Discord tag", 100));
             }
             if (emailAddress?.Length > 200)
             {
                 output = false;
-                errorMessageBuilder.Append("\nEmail address can be at most 200 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("email address", 200));
             }
 
             // TODO Check validity of Discord tag and email address
-            // TODO Refactor validation
 
             errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
 
@@ -82,16 +93,14 @@ namespace TMLibrary.Helpers
             if (entryMembers.Count >= 2 && string.IsNullOrWhiteSpace(entryName))
             {
                 output = false;
-                errorMessageBuilder.Append("\nYou have to specify entry name.");
+                errorMessageBuilder.Append(NoValueMessage("entry name"));
             }
 
             if (entryName?.Length > 100)
             {
                 output = false;
-                errorMessageBuilder.Append("\nEntry name can be at most 100 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("entry name", 100));
             }
-
-            // TODO Refactor validation
 
             errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
 
@@ -107,7 +116,7 @@ namespace TMLibrary.Helpers
             if (string.IsNullOrWhiteSpace(tournamentName))
             {
                 output = false;
-                errorMessageBuilder.Append("\nYou have to specify tournament name.");
+                errorMessageBuilder.Append(NoValueMessage("tournament name"));
             }
             if (tournamentEntries.Count < 2)
             {
@@ -118,10 +127,8 @@ namespace TMLibrary.Helpers
             if (tournamentName?.Length > 100)
             {
                 output = false;
-                errorMessageBuilder.Append("\nTournament name can be at most 100 characters long.");
+                errorMessageBuilder.Append(TooLongValueMessage("tournament name", 100));
             }
-
-            // TODO Refactor validation
 
             errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
 
@@ -141,7 +148,7 @@ namespace TMLibrary.Helpers
             if (string.IsNullOrWhiteSpace(entryOneScore))
             {
                 output = false;
-                errorMessageBuilder.Append("\nYou have to specify score of the first entry.");
+                errorMessageBuilder.Append(NoValueMessage("score of the first entry"));
             }
             else
             {
@@ -156,7 +163,7 @@ namespace TMLibrary.Helpers
             if (string.IsNullOrWhiteSpace(entryTwoScore))
             {
                 output = false;
-                errorMessageBuilder.Append("\nYou have to specify score of the second entry.");
+                errorMessageBuilder.Append(NoValueMessage("score of the second entry"));
             }
             else
             {
@@ -174,8 +181,6 @@ namespace TMLibrary.Helpers
                 output = false;
                 errorMessageBuilder.Append("\nThe matchup cannot result in a tie.");
             }
-
-            // TODO String length validation
 
             errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
 

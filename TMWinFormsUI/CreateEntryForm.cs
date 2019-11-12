@@ -27,22 +27,7 @@ namespace TMWinFormsUI
 
             _callingForm = caller;
 
-            //CreateSampleData();
-
             WireUpLists();
-        }
-
-        private void CreateSampleData()
-        {
-            _availablePeople.Add(new PersonModel { FirstName = "Test", LastName = "Person1", Nickname = "TP1"});
-            _availablePeople.Add(new PersonModel { FirstName = "Test", LastName = "Person2", Nickname = "" });
-            _availablePeople.Add(new PersonModel { FirstName = "", LastName = "", Nickname = "TP3"});
-            _availablePeople.Add(new PersonModel { FirstName = "VeryLongFirstName", LastName = "VeryLongLastName", Nickname = "VeryLongNickname" });
-
-            _selectedPeople.Add(new PersonModel { FirstName = "Test", LastName = "Person1", Nickname = "TP1" });
-            _selectedPeople.Add(new PersonModel { FirstName = "Test", LastName = "Person2", Nickname = "" });
-            _selectedPeople.Add(new PersonModel { FirstName = "", LastName = "", Nickname = "TP3" });
-            _selectedPeople.Add(new PersonModel { FirstName = "VeryLongFirstName", LastName = "VeryLongLastName", Nickname = "VeryLongNickname" });
         }
 
         private void WireUpLists()
@@ -58,8 +43,8 @@ namespace TMWinFormsUI
             entryMembersListBox.DisplayMember = nameof(PersonModel.DisplayName);
         }
 
-        // TODO Refactor person creation to not repeat code in both methods
-        private void personCreatorCreateButton_Click(object sender, EventArgs e)
+        private PersonModel CreatePerson(string nickname, string firstName, string lastName, string discordTag,
+            string emailAddress)
         {
             // Validate the data in the form
             if (ValidationHelper.ValidatePersonCreatorForm(out string errorMessage, personCreatorNicknameValue.Text,
@@ -79,51 +64,46 @@ namespace TMWinFormsUI
                 // Add the PersonModel to the database
                 GlobalConfig.Connection.CreatePerson(person);
 
-                // Clear the form
+                return person;
+            }
+            else
+            {
+                // Show error message
+                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return null;
+            }
+        }
+
+        private void personCreatorCreateButton_Click(object sender, EventArgs e)
+        {
+            PersonModel person = CreatePerson(personCreatorNicknameValue.Text,
+                personCreatorFirstNameValue.Text, personCreatorLastNameValue.Text,
+                personCreatorDiscordTagValue.Text, personCreatorEmailAddressValue.Text);
+
+            if (person != null)
+            {
                 ClearPersonCreatorForm();
 
                 _availablePeople.Add(person);
 
                 WireUpLists();
             }
-            else
-            {
-                // Show error message
-                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void personCreatorCreateAndAddButton_Click(object sender, EventArgs e)
         {
-            // Validate the data in the form
-            if (ValidationHelper.ValidatePersonCreatorForm(out string errorMessage, personCreatorNicknameValue.Text, 
-                    personCreatorFirstNameValue.Text, personCreatorLastNameValue.Text,
-                    personCreatorDiscordTagValue.Text, personCreatorEmailAddressValue.Text))
-            {
-                // Create the PersonModel
-                PersonModel person = new PersonModel
-                {
-                    Nickname = personCreatorNicknameValue.Text,
-                    FirstName = personCreatorFirstNameValue.Text,
-                    LastName = personCreatorLastNameValue.Text,
-                    DiscordTag = personCreatorDiscordTagValue.Text,
-                    EmailAddress = personCreatorEmailAddressValue.Text
-                };
+            PersonModel person = CreatePerson(personCreatorNicknameValue.Text,
+                personCreatorFirstNameValue.Text, personCreatorLastNameValue.Text,
+                personCreatorDiscordTagValue.Text, personCreatorEmailAddressValue.Text);
 
-                // Add the PersonModel to the database
-                GlobalConfig.Connection.CreatePerson(person);
+            if (person != null)
+            {
+                ClearPersonCreatorForm();
 
                 _selectedPeople.Add(person);
 
                 WireUpLists();
-
-                // Clear the form
-                ClearPersonCreatorForm();
-            }
-            else
-            {
-                // Show error message
-                MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

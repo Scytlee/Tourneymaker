@@ -5,7 +5,7 @@ AS
 	SET NOCOUNT ON;
 
 	INSERT INTO dbo.Tournaments (TournamentName, Active, CurrentRound)
-	VALUES (@TournamentName, 1, 1);
+	VALUES (@TournamentName, 0, 0);
 
 	SELECT @Id = SCOPE_IDENTITY();
 RETURN 0

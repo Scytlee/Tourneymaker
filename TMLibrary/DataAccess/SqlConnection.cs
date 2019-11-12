@@ -155,13 +155,13 @@ namespace TMLibrary.DataAccess
             return output;
         }
 
-        public List<TournamentModel> LoadActiveTournamentModels()
+        public List<TournamentModel> LoadTournamentModels()
         {
             List<TournamentModel> output;
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
             {
-                output = connection.Query<TournamentModel>("dbo.spTournaments_GetActive").ToList();
+                output = connection.Query<TournamentModel>("dbo.spTournaments_GetAll").ToList();
 
                 foreach (TournamentModel tournament in output)
                 {
@@ -264,6 +264,19 @@ namespace TMLibrary.DataAccess
                 }
             }
 
+        }
+
+        public void UpdateTournament(TournamentModel tournament)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(_databaseName)))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", tournament.Id);
+                parameters.Add("@Active", tournament.Active);
+                parameters.Add("@CurrentRound", tournament.CurrentRound);
+
+                connection.Execute("dbo.spTournaments_Update", parameters, commandType: CommandType.StoredProcedure);
+            }
         }
     }
 }

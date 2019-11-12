@@ -69,6 +69,7 @@
             this.tournamentNameValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.tournamentNameValue.ForeColor = System.Drawing.Color.White;
             this.tournamentNameValue.Location = new System.Drawing.Point(17, 121);
+            this.tournamentNameValue.MaxLength = 100;
             this.tournamentNameValue.Name = "tournamentNameValue";
             this.tournamentNameValue.Size = new System.Drawing.Size(328, 40);
             this.tournamentNameValue.TabIndex = 9;

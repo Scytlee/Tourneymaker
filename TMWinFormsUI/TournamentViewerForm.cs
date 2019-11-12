@@ -23,14 +23,55 @@ namespace TMWinFormsUI
         {
             InitializeComponent();
 
+            // Set the tournament to the passed one
             _activeTournament = tournament;
 
-            LoadFormData();
+            // Wire up events
+            tournament.OnRoundComplete += Tournament_OnRoundComplete;
+            tournament.OnTournamentComplete += Tournament_OnTournamentComplete;
+
+            tournamentActionButton.Hide();
+            LoadTournamentName();
+
+            // Check tournament status and load elements accordingly
+            if (_activeTournament.Active == 0 && _activeTournament.CurrentRound == 0)
+            {
+                // Tournament ready
+                statusLabelName.Text = "Status";
+                statusLabelValue.Text = "Ready";
+                tournamentActionButton.Text = "Start tournament";
+                tournamentActionButton.Show();
+            }
+            else if (_activeTournament.Active == 0 && _activeTournament.CurrentRound > _activeTournament.Rounds.Count)
+            {
+                // Tournament finished
+                statusLabelName.Text = "Status";
+                statusLabelValue.Text = "Finished";
+            }
+            else
+            {
+                // Tournament in progress
+                statusLabelName.Text = "Current round";
+                statusLabelValue.Text = _activeTournament.CurrentRound.ToString();
+                TournamentLogic.CheckRoundStatus(_activeTournament);
+            }
 
             LoadRounds();
         }
 
-        private void LoadFormData()
+        private void Tournament_OnRoundComplete(object sender, EventArgs e)
+        {
+            tournamentActionButton.Text = "Complete round";
+            tournamentActionButton.Show();
+        }
+
+        private void Tournament_OnTournamentComplete(object sender, EventArgs e)
+        {
+            tournamentActionButton.Text = "Complete tournament";
+            tournamentActionButton.Show();
+        }
+
+        private void LoadTournamentName()
         {
             tournamentNameLabel.Text = _activeTournament.TournamentName;
         }
@@ -125,6 +166,7 @@ namespace TMWinFormsUI
             versusLabel.Hide();
             updateScoreButton.Hide();
         }
+
         private void ShowAll()
         {
             entryOneNameLabel.Show();
@@ -143,14 +185,24 @@ namespace TMWinFormsUI
             }
 
             ShowAll();
+            entryOneScoreValue.ReadOnly = false;
+            entryTwoScoreValue.ReadOnly = false;
 
             MatchupModel matchup = (MatchupModel) matchupsListBox.SelectedItem;
+
+            if (matchup.MatchupRound != _activeTournament.CurrentRound)
+            {
+                entryOneScoreValue.ReadOnly = true;
+                entryTwoScoreValue.ReadOnly = true;
+                updateScoreButton.Hide();
+            }
 
             if (matchup.MatchupEntries.Count == 1)
             {
                 // Bye matchup
                 entryOneNameLabel.Text = matchup.MatchupEntries[0].EntryCompeting.EntryName;
                 entryOneScoreValue.Text = "bye";
+                entryOneScoreValue.ReadOnly = true;
                 HideElementsBye();
             }
             else
@@ -215,6 +267,26 @@ namespace TMWinFormsUI
                 // Show error message
                 MessageBox.Show($"The following errors exist in the form:\n{ errorMessage }", "Update error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void tournamentActionButton_Click(object sender, EventArgs e)
+        {
+            tournamentActionButton.Hide();
+
+            bool isCompleted = TournamentLogic.ProgressTournament(_activeTournament);
+
+            if (isCompleted)
+            {
+                statusLabelName.Text = "Status";
+                statusLabelValue.Text = "Finished";
+            }
+            else
+            {
+                statusLabelName.Text = "Current round";
+                statusLabelValue.Text = _activeTournament.CurrentRound.ToString();
+            }
+
+            LoadMatchups(showUnplayedOnlyCheckBox.Checked);
         }
     }
 }

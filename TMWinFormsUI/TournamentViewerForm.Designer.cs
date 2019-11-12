@@ -39,19 +39,22 @@
             this.entryTwoScoreValue = new System.Windows.Forms.TextBox();
             this.versusLabel = new System.Windows.Forms.Label();
             this.updateScoreButton = new System.Windows.Forms.Button();
+            this.statusLabelName = new System.Windows.Forms.Label();
+            this.statusLabelValue = new System.Windows.Forms.Label();
+            this.tournamentActionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tournamentNameLabel
             // 
-            this.tournamentNameLabel.AutoSize = true;
             this.tournamentNameLabel.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tournamentNameLabel.ForeColor = System.Drawing.Color.White;
             this.tournamentNameLabel.Location = new System.Drawing.Point(13, 9);
             this.tournamentNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tournamentNameLabel.Name = "tournamentNameLabel";
-            this.tournamentNameLabel.Size = new System.Drawing.Size(349, 52);
+            this.tournamentNameLabel.Size = new System.Drawing.Size(908, 52);
             this.tournamentNameLabel.TabIndex = 0;
             this.tournamentNameLabel.Text = "<TournamentName>";
+            this.tournamentNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // selectedRoundLabel
             // 
@@ -132,6 +135,7 @@
             this.entryOneScoreValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.entryOneScoreValue.ForeColor = System.Drawing.Color.White;
             this.entryOneScoreValue.Location = new System.Drawing.Point(664, 258);
+            this.entryOneScoreValue.MaxLength = 16;
             this.entryOneScoreValue.Name = "entryOneScoreValue";
             this.entryOneScoreValue.Size = new System.Drawing.Size(72, 40);
             this.entryOneScoreValue.TabIndex = 8;
@@ -142,6 +146,7 @@
             this.entryTwoScoreValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.entryTwoScoreValue.ForeColor = System.Drawing.Color.White;
             this.entryTwoScoreValue.Location = new System.Drawing.Point(664, 385);
+            this.entryTwoScoreValue.MaxLength = 16;
             this.entryTwoScoreValue.Name = "entryTwoScoreValue";
             this.entryTwoScoreValue.Size = new System.Drawing.Size(72, 40);
             this.entryTwoScoreValue.TabIndex = 9;
@@ -175,12 +180,54 @@
             this.updateScoreButton.UseVisualStyleBackColor = false;
             this.updateScoreButton.Click += new System.EventHandler(this.updateScoreButton_Click);
             // 
+            // statusLabelName
+            // 
+            this.statusLabelName.Font = new System.Drawing.Font("Bahnschrift SemiLight", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabelName.Location = new System.Drawing.Point(481, 96);
+            this.statusLabelName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.statusLabelName.Name = "statusLabelName";
+            this.statusLabelName.Size = new System.Drawing.Size(188, 33);
+            this.statusLabelName.TabIndex = 12;
+            this.statusLabelName.Text = "<label>";
+            this.statusLabelName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabelValue
+            // 
+            this.statusLabelValue.Font = new System.Drawing.Font("Bahnschrift", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.statusLabelValue.Location = new System.Drawing.Point(481, 129);
+            this.statusLabelValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.statusLabelValue.Name = "statusLabelValue";
+            this.statusLabelValue.Size = new System.Drawing.Size(188, 33);
+            this.statusLabelValue.TabIndex = 13;
+            this.statusLabelValue.Text = "<status>";
+            this.statusLabelValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tournamentActionButton
+            // 
+            this.tournamentActionButton.BackColor = System.Drawing.Color.White;
+            this.tournamentActionButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.tournamentActionButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.tournamentActionButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.tournamentActionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tournamentActionButton.Font = new System.Drawing.Font("Bahnschrift Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tournamentActionButton.ForeColor = System.Drawing.Color.Black;
+            this.tournamentActionButton.Location = new System.Drawing.Point(711, 107);
+            this.tournamentActionButton.Name = "tournamentActionButton";
+            this.tournamentActionButton.Size = new System.Drawing.Size(199, 43);
+            this.tournamentActionButton.TabIndex = 14;
+            this.tournamentActionButton.Text = "<action>";
+            this.tournamentActionButton.UseVisualStyleBackColor = false;
+            this.tournamentActionButton.Click += new System.EventHandler(this.tournamentActionButton_Click);
+            // 
             // TournamentViewerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 33F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(937, 526);
+            this.Controls.Add(this.tournamentActionButton);
+            this.Controls.Add(this.statusLabelValue);
+            this.Controls.Add(this.statusLabelName);
             this.Controls.Add(this.updateScoreButton);
             this.Controls.Add(this.versusLabel);
             this.Controls.Add(this.entryTwoScoreValue);
@@ -215,6 +262,9 @@
         private System.Windows.Forms.TextBox entryTwoScoreValue;
         private System.Windows.Forms.Label versusLabel;
         private System.Windows.Forms.Button updateScoreButton;
+        private System.Windows.Forms.Label statusLabelName;
+        private System.Windows.Forms.Label statusLabelValue;
+        private System.Windows.Forms.Button tournamentActionButton;
     }
 }
 

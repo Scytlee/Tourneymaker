@@ -23,5 +23,8 @@ namespace TMWinFormsUI
 
             Application.Run(new TournamentDashboardForm());
         }
+
+        // TODO Add tournament options
+        // TODO Add general options
     }
 }

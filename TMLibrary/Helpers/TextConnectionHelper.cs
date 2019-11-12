@@ -7,12 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TMLibrary.Models;
 
-// ReSharper disable once CheckNamespace
-namespace TMLibrary.DataAccess.TextHelpers
+namespace TMLibrary.Helpers
 {
-    // TODO Move this to Helpers
     // TODO Just refactor this whole mess
-    public static class TextConnectionProcessor
+    public static class TextConnectionHelper
     {
         public static string FullFilePath(this string fileName)
         {
@@ -88,7 +86,7 @@ namespace TMLibrary.DataAccess.TextHelpers
 
         public static List<TournamentModel> ConvertToTournamentModels(this List<string> lines)
         {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[CurrentRound]
+            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound]
 
             List<TournamentModel> output = new List<TournamentModel>();
 
@@ -103,7 +101,8 @@ namespace TMLibrary.DataAccess.TextHelpers
                 {
                     Id = int.Parse(cols[0]),
                     TournamentName = cols[1],
-                    CurrentRound = int.Parse(cols[4])
+                    Active = int.Parse(cols[4]),
+                    CurrentRound = int.Parse(cols[5])
                 };
 
                 string[] entryIds = cols[2].Split('|');
@@ -179,8 +178,6 @@ namespace TMLibrary.DataAccess.TextHelpers
 
         public static void SaveRounds(this TournamentModel tournament)
         {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[CurrentRound]
-
             // Loop through the rounds
             foreach (List<MatchupModel> round in tournament.Rounds)
             {
@@ -390,6 +387,29 @@ namespace TMLibrary.DataAccess.TextHelpers
             File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), lines);
         }
 
+        public static void UpdateTournamentInFile(this TournamentModel updatedTournament)
+        {
+            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound]
+
+            List<TournamentModel> tournaments = GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+
+            TournamentModel outdatedTournament = tournaments.First(x => x.Id == updatedTournament.Id);
+
+            tournaments.Remove(outdatedTournament);
+            tournaments.Add(updatedTournament);
+
+            // save to file
+            List<string> lines = new List<string>();
+
+            foreach (TournamentModel tournament in tournaments)
+            {
+                lines.Add($"{ tournament.Id },{ tournament.TournamentName },{ ConvertEntriesListToString(tournament.TournamentEntries) }," +
+                          $"{ ConvertRoundsToString(tournament.Rounds) },{ tournament.Active },{ tournament.CurrentRound }");
+            }
+
+            File.WriteAllLines(GlobalConfig.TournamentsFile.FullFilePath(), lines);
+        }
+
         public static void UpdateEntryInFile(this MatchupEntryModel updatedMatchupEntry)
         {
             // [Id],(EntryCompeting)[Id],[Score],(ParentMatchup)[Id]
@@ -466,14 +486,14 @@ namespace TMLibrary.DataAccess.TextHelpers
 
         public static void SaveAllToTournamentModelsFile(this List<TournamentModel> tournaments)
         {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[CurrentRound]
+            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound]
 
             List<string> lines = new List<string>();
 
             foreach (TournamentModel tournament in tournaments)
             {
                 lines.Add($"{ tournament.Id },{ tournament.TournamentName },{ ConvertEntriesListToString(tournament.TournamentEntries) }," +
-                          $"{ ConvertRoundsToString(tournament.Rounds) },{ tournament.CurrentRound }");
+                          $"{ ConvertRoundsToString(tournament.Rounds) },{ tournament.Active },{ tournament.CurrentRound }");
             }
 
             File.WriteAllLines(GlobalConfig.TournamentsFile.FullFilePath(), lines);

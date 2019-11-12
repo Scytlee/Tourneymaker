@@ -24,7 +24,8 @@
         /// The last name of the person.
         /// </summary>
         public string LastName { get; set; }
-
+        
+        // TODO Replace Discord tag with Discord userID
         /// <summary>
         /// The Discord tag of the person.
         /// </summary>
@@ -42,18 +43,22 @@
         {
             get
             {
+                string output;
+
                 if (Nickname == "")
                 {
-                    return $"{ FirstName } { LastName }";
+                    output = $"{ FirstName } { LastName }";
                 }
                 else if (FirstName == "" && LastName == "")
                 {
-                    return Nickname;
+                    output = $"'{ Nickname }'";
                 }
                 else
                 {
-                    return $"{ FirstName } { LastName } ({ Nickname })";
+                    output = $"{ FirstName } { LastName } '{ Nickname }'";
                 }
+
+                return output;
             }
         }
 

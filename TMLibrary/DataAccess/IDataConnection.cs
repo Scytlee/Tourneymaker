@@ -10,7 +10,8 @@ namespace TMLibrary.DataAccess
         void CreateTournament(TournamentModel newTournament);
         List<PersonModel> LoadPersonModels();
         List<EntryModel> LoadEntryModels();
-        List<TournamentModel> LoadActiveTournamentModels();
+        List<TournamentModel> LoadTournamentModels();
         void UpdateMatchup(MatchupModel matchup);
+        void UpdateTournament(TournamentModel tournament);
     }
 }
