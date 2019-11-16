@@ -15,6 +15,7 @@ namespace TMWinFormsUI
 {
     public partial class CreateTournamentForm : Form, IEntryRequester
     {
+        // TODO Refactor so it loads only previews
         private List<EntryModel> _availableEntries = GlobalConfig.Connection.LoadEntryModels();
         private List<EntryModel> _selectedEntries = new List<EntryModel>();
 

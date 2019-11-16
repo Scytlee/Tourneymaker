@@ -14,8 +14,6 @@ namespace TMWinFormsUI
 {
     public partial class TournamentDashboardForm : Form
     {
-        private List<TournamentModel> _tournaments = GlobalConfig.Connection.LoadTournamentModels();
-
         private List<TournamentPreviewModel> _readyToStartTournaments;
         private List<TournamentPreviewModel> _inProgressTournaments;
         private List<TournamentPreviewModel> _finishedTournaments;
@@ -76,10 +74,13 @@ namespace TMWinFormsUI
 
         private void loadTournamentButton_Click(object sender, EventArgs e)
         {
-            int tournamentId = ((TournamentPreviewModel) loadTournamentDropDown.SelectedItem).Id;
-            TournamentModel selectedTournament = GlobalConfig.Connection.LoadTournamentModel(tournamentId);
-            TournamentViewerForm form = new TournamentViewerForm(selectedTournament);
-            form.Show();
+            if (loadTournamentDropDown.SelectedItem != null)
+            {
+                int tournamentId = ((TournamentPreviewModel)loadTournamentDropDown.SelectedItem).Id;
+                TournamentModel selectedTournament = GlobalConfig.Connection.LoadTournamentModel(tournamentId);
+                TournamentViewerForm form = new TournamentViewerForm(selectedTournament);
+                form.Show(); 
+            }
         }
 
         private void showReadyToStartCheckBox_CheckedChanged(object sender, EventArgs e)
