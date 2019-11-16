@@ -278,5 +278,15 @@ namespace TMLibrary.DataAccess
                 connection.Execute("dbo.spTournaments_Update", parameters, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public List<TournamentPreviewModel> LoadTournamentPreviews(TournamentStatus status)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public TournamentModel LoadTournamentModel(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -88,7 +88,8 @@ namespace TMWinFormsUI
                     TournamentName = tournamentNameValue.Text,
                     TournamentEntries = _selectedEntries,
                     Active = 0,
-                    CurrentRound = 0
+                    CurrentRound = 0,
+                    Status = TournamentStatus.ReadyToStart
                 };
 
                 // Wire up matchups
@@ -104,7 +105,7 @@ namespace TMWinFormsUI
                 // Open the TournamentViewerForm and close this form
                 TournamentViewerForm form = new TournamentViewerForm(tournament);
                 form.Show();
-                this.Close();
+                Close();
             }
             else
             {

@@ -48,6 +48,11 @@ namespace TMLibrary.Models
         /// </summary>
         public int CurrentRound { get; set; }
 
+        /// <summary>
+        /// Enum representing status of the tournament.
+        /// </summary>
+        public TournamentStatus Status { get; set; }
+
         public void CompleteRound()
         {
             OnRoundComplete?.Invoke(this, null);

@@ -11,4 +11,11 @@ namespace TMLibrary
         SqlDatabase,
         TextFile
     }
+
+    public enum TournamentStatus
+    {
+        ReadyToStart,
+        InProgress,
+        Finished
+    }
 }

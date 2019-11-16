@@ -13,5 +13,7 @@ namespace TMLibrary.DataAccess
         List<TournamentModel> LoadTournamentModels();
         void UpdateMatchup(MatchupModel matchup);
         void UpdateTournament(TournamentModel tournament);
+        List<TournamentPreviewModel> LoadTournamentPreviews(TournamentStatus status);
+        TournamentModel LoadTournamentModel(int id);
     }
 }

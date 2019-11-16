@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMLibrary.Helpers;
 using TMLibrary.Models;
@@ -58,8 +59,7 @@ namespace TMLibrary.DataAccess
         public void CreateTournament(TournamentModel newTournament)
         {
             // Load the TournamentModels text file and convert the text to List<TournamentModel>
-            List<TournamentModel> tournaments =
-                GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+            List<TournamentModel> tournaments = LoadTournamentModels();
 
             // Find the max ID
             int currentId = 1;
@@ -84,17 +84,17 @@ namespace TMLibrary.DataAccess
 
         public List<PersonModel> LoadPersonModels()
         {
-            return GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+            return TextConnectionHelper.People;
         }
 
         public List<EntryModel> LoadEntryModels()
         {
-            return GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
+            return TextConnectionHelper.Entries;
         }
 
         public List<TournamentModel> LoadTournamentModels()
         {
-            return GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+            return TextConnectionHelper.Tournaments;
         }
 
         public void UpdateMatchup(MatchupModel matchup)
@@ -105,6 +105,45 @@ namespace TMLibrary.DataAccess
         public void UpdateTournament(TournamentModel tournament)
         {
             tournament.UpdateTournamentInFile();
+        }
+
+        public List<TournamentPreviewModel> LoadTournamentPreviews(TournamentStatus status)
+        {
+            // There shouldn't be any errors regarding invalid enum type passed, therefore
+            // there is no check for that
+
+            List<TournamentPreviewModel> output = new List<TournamentPreviewModel>();
+            List<TournamentPreviewModel> allTournamentPreviews = GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentPreviewModels();
+            // TODO This should be refactored to not load all tournaments with every call
+
+            foreach (TournamentPreviewModel tournamentPreview in allTournamentPreviews)
+            {
+                if (tournamentPreview.Status == status)
+                {
+                    output.Add(tournamentPreview);
+                }
+            }
+
+            return output;
+        }
+
+        public TournamentModel LoadTournamentModel(int id)
+        {
+            TournamentModel output = null;
+
+            List<string> allTournamentsSerialized = GlobalConfig.TournamentsFile.FullFilePath().LoadFile();
+
+            foreach (string tournament in allTournamentsSerialized)
+            {
+                string[] tournamentData = tournament.Split(',');
+
+                if (int.Parse(tournamentData[0]) == id)
+                {
+                    output = TextConnectionHelper.DeserializeTournament(tournament);
+                }
+            }
+
+            return output;
         }
     }
 }
