@@ -6,12 +6,12 @@ namespace TMLibrary.Models
     /// <summary>
     /// Represents one match in the tournament.
     /// </summary>
-    public class MatchupModel
+    public class MatchupModel : IModel
     {
         /// <summary>
         /// The unique identifier for the matchup.
         /// </summary>
-        public int Id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// The set of entries that were involved in this match.

@@ -1,11 +1,10 @@
 ﻿CREATE PROCEDURE [dbo].[spTournaments_Update]
-	@Id INT,
-	@Active BIT,
+	@id INT,
 	@CurrentRound INT
 AS
 	SET NOCOUNT ON;
 
 	UPDATE dbo.Tournaments
-	SET Active = @Active, CurrentRound = @CurrentRound
-	WHERE Id = @Id;
+	SET CurrentRound = @CurrentRound
+	WHERE id = @id;
 RETURN 0

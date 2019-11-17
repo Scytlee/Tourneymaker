@@ -47,57 +47,6 @@ namespace TMLibrary.Helpers
             }
         }
 
-        private static List<TournamentModel> _tournaments;
-        private static bool _tournamentsOutdated = true;
-
-        public static List<TournamentModel> Tournaments
-        {
-            get
-            {
-                if (_tournamentsOutdated)
-                {
-                    _tournaments = GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels();
-                    _tournamentsOutdated = false;
-                }
-
-                return _tournaments;
-            }
-        }
-
-        private static List<MatchupModel> _matchups;
-        private static bool _matchupsOutdated = true;
-
-        public static List<MatchupModel> Matchups
-        {
-            get
-            {
-                if (_matchupsOutdated)
-                {
-                    _matchups = GlobalConfig.MatchupsFile.FullFilePath().LoadFile().LoadMatchups();
-                    _matchupsOutdated = false;
-                }
-
-                return _matchups;
-            }
-        }
-
-        private static List<MatchupEntryModel> _matchupEntries;
-        private static bool _matchupEntriesOutdated = true;
-
-        public static List<MatchupEntryModel> MatchupEntries
-        {
-            get
-            {
-                if (_matchupEntriesOutdated)
-                {
-                    _matchupEntries = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
-                    _matchupEntriesOutdated = false;
-                }
-
-                return _matchupEntries;
-            }
-        }
-
         public static string FullFilePath(this string fileName)
         {
             return $"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }";
@@ -108,7 +57,7 @@ namespace TMLibrary.Helpers
             return !File.Exists(file) ? new List<string>() : File.ReadAllLines(file).ToList();
         }
 
-        public static List<PersonModel> ConvertToPersonModels(this List<string> peopleSerialized)
+        private static List<PersonModel> ConvertToPersonModels(this List<string> peopleSerialized)
         {
             List<PersonModel> output = new List<PersonModel>();
 
@@ -126,15 +75,15 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static PersonModel DeserializePerson(string personSerialized)
+        private static PersonModel DeserializePerson(string personSerialized)
         {
-            // [Id],[Nickname],[FirstName],[LastName],[DiscordTag],[EmailAddress]
+            // [id],[Nickname],[FirstName],[LastName],[DiscordTag],[EmailAddress]
 
             string[] personData = personSerialized.Split(',');
 
             PersonModel output = new PersonModel
             {
-                Id = int.Parse(personData[0]),
+                id = int.Parse(personData[0]),
                 Nickname = personData[1],
                 FirstName = personData[2],
                 LastName = personData[3],
@@ -145,7 +94,7 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static List<EntryModel> ConvertToEntryModels(this List<string> entriesSerialized)
+        private static List<EntryModel> ConvertToEntryModels(this List<string> entriesSerialized)
         {
             List<EntryModel> output = new List<EntryModel>();
 
@@ -163,9 +112,9 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static EntryModel DeserializeEntry(string entrySerialized)
+        private static EntryModel DeserializeEntry(string entrySerialized)
         {
-            // [Id],[EntryName],(EntryMembers)[Id|Id|Id]
+            // [id],[EntryName],(EntryMembers)[id|id|id]
 
             EntryModel output;
 
@@ -173,7 +122,7 @@ namespace TMLibrary.Helpers
 
             output = new EntryModel
             {
-                Id = int.Parse(entryData[0]),
+                id = int.Parse(entryData[0]),
                 EntryName = entryData[1]
             };
 
@@ -187,7 +136,7 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static PersonModel LoadPerson(string id)
+        private static PersonModel LoadPerson(string id)
         {
             if (id == "")
             {
@@ -215,27 +164,9 @@ namespace TMLibrary.Helpers
             return null;
         }
 
-        public static List<TournamentModel> ConvertToTournamentModels(this List<string> tournamentsSerialized)
-        {
-            List<TournamentModel> output = new List<TournamentModel>();
-
-            // Remove header
-            if (tournamentsSerialized.Count != 0)
-            {
-                tournamentsSerialized.RemoveAt(0);
-            }
-
-            foreach (string tournament in tournamentsSerialized)
-            {
-                output.Add(DeserializeTournament(tournament));
-            }
-
-            return output;
-        }
-
         public static TournamentModel DeserializeTournament(string tournamentSerialized)
         {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound],[Status]
+            // [id],[TournamentName],(TournamentEntries)[id|id|id],(Rounds)[id^id^id|id^id^id|id^id^id],[CurrentRound]
 
             TournamentModel output;
 
@@ -243,11 +174,9 @@ namespace TMLibrary.Helpers
 
             output = new TournamentModel
             {
-                Id = int.Parse(tournamentData[0]),
+                id = int.Parse(tournamentData[0]),
                 TournamentName = tournamentData[1],
-                Active = int.Parse(tournamentData[4]),
-                CurrentRound = int.Parse(tournamentData[5]),
-                Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), tournamentData[6])
+                CurrentRound = int.Parse(tournamentData[4])
             };
 
             string[] entryIds = tournamentData[2].Split('|');
@@ -276,42 +205,45 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static List<TournamentPreviewModel> ConvertToTournamentPreviewModels(this List<string> lines)
+        public static List<TournamentPreviewModel> ConvertToTournamentPreviewModels(this List<string> tournamentsSerialized)
         {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound],[Status]
+            // [id],[TournamentName],(TournamentEntries)[id|id|id],(Rounds)[id^id^id|id^id^id|id^id^id],[CurrentRound]
 
             List<TournamentPreviewModel> output = new List<TournamentPreviewModel>();
 
-            foreach (string line in lines)
+            // Remove header
+            if (tournamentsSerialized.Count != 0)
             {
-                string[] cols = line.Split(',');
+                tournamentsSerialized.RemoveAt(0);
+            }
+
+            foreach (string tournament in tournamentsSerialized)
+            {
+                string[] tournamentData = tournament.Split(',');
 
                 TournamentPreviewModel tournamentPreview = new TournamentPreviewModel
                 {
-                    Id = int.Parse(cols[0]),
-                    TournamentName = cols[1],
-                    Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), cols[6])
+                    id = int.Parse(tournamentData[0]),
+                    TournamentName = tournamentData[1]
                 };
+
+                if (tournamentData[4] == "-1")
+                {
+                    tournamentPreview.Status = TournamentStatus.Finished;
+                }
+                else if (tournamentData[4] == "0")
+                {
+                    tournamentPreview.Status = TournamentStatus.ReadyToStart;
+                }
+                else
+                {
+                    tournamentPreview.Status = TournamentStatus.InProgress;
+                }
 
                 output.Add(tournamentPreview);
             }
 
             return output;
-        }
-
-        public static void SaveAllToPersonModelsFile(this List<PersonModel> people)
-        {
-            // [Id],[Nickname],[FirstName],[LastName],[DiscordTag],[EmailAddress]
-
-            List<string> lines = new List<string>();
-
-            foreach (PersonModel person in people)
-            {
-                lines.Add($"{ person.Id },{ person.Nickname },{ person.FirstName },{ person.LastName },{ person.DiscordTag },{ person.EmailAddress }");
-            }
-
-            File.WriteAllLines(GlobalConfig.PeopleFile.FullFilePath(), lines);
-            _peopleOutdated = true;
         }
 
         private static string ConvertPeopleListToString(List<PersonModel> people)
@@ -320,7 +252,7 @@ namespace TMLibrary.Helpers
 
             foreach (PersonModel person in people)
             {
-                output += $"{ person.Id }|";
+                output += $"{ person.id }|";
             }
 
             output = output.Substring(0, output.Length - 1);
@@ -328,37 +260,9 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static void SaveRounds(this TournamentModel tournament)
+        private static MatchupEntryModel DeserializeMatchupEntry(string matchupEntrySerialized)
         {
-            // Loop through the rounds
-            foreach (List<MatchupModel> round in tournament.Rounds)
-            {
-                // Loop through the matchups
-                foreach (MatchupModel matchup in round)
-                {
-                    matchup.SaveMatchup();
-                }
-            }
-        }
-
-        public static List<MatchupEntryModel> ConvertToMatchupEntryModels(this List<string> matchupEntriesSerialized)
-        {
-            List<MatchupEntryModel> output = new List<MatchupEntryModel>();
-
-            // Remove header
-            matchupEntriesSerialized.RemoveAt(0);
-
-            foreach (string matchupEntry in matchupEntriesSerialized)
-            {
-                output.Add(DeserializeMatchupEntry(matchupEntry));
-            }
-
-            return output;
-        }
-
-        public static MatchupEntryModel DeserializeMatchupEntry(string matchupEntrySerialized)
-        {
-            // [Id],(EntryCompeting)[Id],[Score],(ParentMatchup)[Id]
+            // [id],(EntryCompeting)[id],[Score],(ParentMatchup)[id]
 
             MatchupEntryModel output;
 
@@ -366,7 +270,7 @@ namespace TMLibrary.Helpers
 
             output = new MatchupEntryModel
             {
-                Id = int.Parse(matchupEntryData[0]),
+                id = int.Parse(matchupEntryData[0]),
                 EntryCompeting = LoadEntry(matchupEntryData[1]),
                 Score = double.Parse(matchupEntryData[2]),
                 ParentMatchup = LoadMatchup(matchupEntryData[3])
@@ -405,7 +309,7 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static EntryModel LoadEntry(string id)
+        private static EntryModel LoadEntry(string id)
         {
             if (id == "")
             {
@@ -433,7 +337,7 @@ namespace TMLibrary.Helpers
             return null;
         }
 
-        public static MatchupModel LoadMatchup(string id)
+        private static MatchupModel LoadMatchup(string id)
         {
             if (id == "")
             {
@@ -461,26 +365,9 @@ namespace TMLibrary.Helpers
             return null;
         }
 
-        public static List<MatchupModel> LoadMatchups(this List<string> matchupsSerialized)
+        private static MatchupModel DeserializeMatchup(string matchupSerialized)
         {
-            List<MatchupModel> output = new List<MatchupModel>();
-
-            // Remove header
-            if (matchupsSerialized.Count != 0)
-            {
-                matchupsSerialized.RemoveAt(0);
-            }
-
-            foreach (string matchup in matchupsSerialized)
-            {
-                output.Add(DeserializeMatchup(matchup));
-            }
-
-            return output;
-        }
-        public static MatchupModel DeserializeMatchup(string matchupSerialized)
-        {
-            // [Id],(MatchupEntries)[Id|Id|Id],(Winner)[Id],[MatchupRound]
+            // [id],(MatchupEntries)[id|id|id],(Winner)[id],[MatchupRound]
 
             MatchupModel output;
 
@@ -488,7 +375,7 @@ namespace TMLibrary.Helpers
 
             output = new MatchupModel
             {
-                Id = int.Parse(matchupData[0]),
+                id = int.Parse(matchupData[0]),
                 MatchupEntries = DeserializeMatchupEntryList(matchupData[1]),
                 Winner = LoadEntry(matchupData[2]),
                 MatchupRound = int.Parse(matchupData[3])
@@ -497,7 +384,7 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static void SaveMatchup(this MatchupModel matchup)
+        private static void SaveMatchup(this MatchupModel matchup)
         {
             List<string> matchupsSerialized = GlobalConfig.MatchupsFile.FullFilePath().LoadFile();
 
@@ -513,24 +400,23 @@ namespace TMLibrary.Helpers
                 matchupId = int.Parse(matchupsSerialized[0]);
             }
 
-            matchup.Id = matchupId++;
-            matchupsSerialized[0] = matchupId.ToString();
-            matchupsSerialized.Add(SerializeMatchup(matchup));
-
             foreach (MatchupEntryModel matchupEntry in matchup.MatchupEntries)
             {
                 matchupEntry.SaveMatchupEntry();
             }
 
+            matchup.id = matchupId++;
+            matchupsSerialized[0] = matchupId.ToString();
+            matchupsSerialized.Add(SerializeMatchup(matchup));
+
             File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), matchupsSerialized);
-            _matchupsOutdated = true;
         }
 
         private static string SerializeMatchup(MatchupModel matchup)
         {
-            // [Id],(MatchupEntries)[Id|Id|Id],(Winner)[Id],[MatchupRound]
+            // [id],(MatchupEntries)[id|id|id],(Winner)[id],[MatchupRound]
 
-            string output = $"{ matchup.Id },{ SerializeMatchupEntryList(matchup.MatchupEntries) },{ matchup.Winner?.Id.ToString() },{ matchup.MatchupRound }";
+            string output = $"{ matchup.id },{ SerializeList(matchup.MatchupEntries, '|') },{ matchup.Winner?.id.ToString() },{ matchup.MatchupRound }";
 
             return output;
         }
@@ -547,7 +433,7 @@ namespace TMLibrary.Helpers
             {
                 string[] matchupEntryData = matchup.Split(',');
 
-                if (matchupEntryData[0] == updatedMatchup.Id.ToString())
+                if (matchupEntryData[0] == updatedMatchup.id.ToString())
                 {
                     matchupsSerialized.Remove(matchup);
                     matchupsSerialized.Add(SerializeMatchup(updatedMatchup));
@@ -563,7 +449,6 @@ namespace TMLibrary.Helpers
             }
 
             File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), matchupsSerialized);
-            _matchupsOutdated = true;
         }
 
         public static void UpdateTournament(this TournamentModel updatedTournament)
@@ -578,7 +463,7 @@ namespace TMLibrary.Helpers
             {
                 string[] tournamentData = tournament.Split(',');
 
-                if (tournamentData[0] == updatedTournament.Id.ToString())
+                if (tournamentData[0] == updatedTournament.id.ToString())
                 {
                     tournamentsSerialized.Remove(tournament);
                     tournamentsSerialized.Add(SerializeTournament(updatedTournament));
@@ -589,10 +474,9 @@ namespace TMLibrary.Helpers
             tournamentsSerialized.Insert(0, header);
 
             File.WriteAllLines(GlobalConfig.TournamentsFile.FullFilePath(), tournamentsSerialized);
-            _tournamentsOutdated = true;
         }
 
-        public static void UpdateMatchupEntry(this MatchupEntryModel updatedMatchupEntry)
+        private static void UpdateMatchupEntry(this MatchupEntryModel updatedMatchupEntry)
         {
             List<string> matchupEntriesSerialized = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile();
 
@@ -604,7 +488,7 @@ namespace TMLibrary.Helpers
             {
                 string[] matchupEntryData = matchupEntry.Split(',');
 
-                if (matchupEntryData[0] == updatedMatchupEntry.Id.ToString())
+                if (matchupEntryData[0] == updatedMatchupEntry.id.ToString())
                 {
                     matchupEntriesSerialized.Remove(matchupEntry);
                     matchupEntriesSerialized.Add(SerializeMatchupEntry(updatedMatchupEntry));
@@ -615,38 +499,9 @@ namespace TMLibrary.Helpers
             matchupEntriesSerialized.Insert(0, header);
 
             File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), matchupEntriesSerialized);
-            _matchupEntriesOutdated = true;
         }
 
-        public static MatchupEntryModel LoadMatchupEntry(string id)
-        {
-            if (id == "")
-            {
-                return null;
-            }
-
-            List<string> matchupEntriesSerialized = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile();
-
-            // Remove header
-            if (matchupEntriesSerialized.Count != 0)
-            {
-                matchupEntriesSerialized.RemoveAt(0);
-            }
-
-            foreach (string matchupEntry in matchupEntriesSerialized)
-            {
-                string[] matchupEntryData = matchupEntry.Split(',');
-
-                if (matchupEntryData[0] == id)
-                {
-                    return DeserializeMatchupEntry(matchupEntry);
-                }
-            }
-
-            return null;
-        }
-
-        public static void SaveMatchupEntry(this MatchupEntryModel matchupEntry)
+        private static void SaveMatchupEntry(this MatchupEntryModel matchupEntry)
         {
             List<string> matchupEntriesSerialized = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile();
 
@@ -662,12 +517,11 @@ namespace TMLibrary.Helpers
                 matchupEntryId = int.Parse(matchupEntriesSerialized[0]);
             }
 
-            matchupEntry.Id = matchupEntryId++;
+            matchupEntry.id = matchupEntryId++;
             matchupEntriesSerialized[0] = matchupEntryId.ToString();
             matchupEntriesSerialized.Add(SerializeMatchupEntry(matchupEntry));
 
             File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), matchupEntriesSerialized);
-            _matchupEntriesOutdated = true;
         }
 
         public static void SaveEntry(this EntryModel entry)
@@ -686,7 +540,7 @@ namespace TMLibrary.Helpers
                 entryId = int.Parse(entriesSerialized[0]);
             }
 
-            entry.Id = entryId++;
+            entry.id = entryId++;
             entriesSerialized[0] = entryId.ToString();
             entriesSerialized.Add(SerializeEntry(entry));
 
@@ -710,7 +564,7 @@ namespace TMLibrary.Helpers
                 personId = int.Parse(peopleSerialized[0]);
             }
 
-            person.Id = personId++;
+            person.id = personId++;
             peopleSerialized[0] = personId.ToString();
             peopleSerialized.Add(SerializePerson(person));
 
@@ -734,10 +588,6 @@ namespace TMLibrary.Helpers
                 tournamentId = int.Parse(tournamentsSerialized[0]);
             }
 
-            tournament.Id = tournamentId++;
-            tournamentsSerialized[0] = tournamentId.ToString();
-            tournamentsSerialized.Add(SerializeTournament(tournament));
-
             foreach (List<MatchupModel> round in tournament.Rounds)
             {
                 foreach (MatchupModel matchup in round)
@@ -746,61 +596,48 @@ namespace TMLibrary.Helpers
                 }
             }
 
+            tournament.id = tournamentId++;
+            tournamentsSerialized[0] = tournamentId.ToString();
+            tournamentsSerialized.Add(SerializeTournament(tournament));
+
             File.WriteAllLines(GlobalConfig.TournamentsFile.FullFilePath(), tournamentsSerialized);
-            _tournamentsOutdated = true;
         }
 
         private static string SerializeTournament(TournamentModel tournament)
         {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound],[Status]
+            // [id],[TournamentName],(TournamentEntries)[id|id|id],(Rounds)[id^id^id|id^id^id|id^id^id],[CurrentRound]
 
-            string output = $"{ tournament.Id },{ tournament.TournamentName },{ SerializeEntryList(tournament.TournamentEntries) }," +
-                            $"{ SerializeRounds(tournament.Rounds) },{ tournament.Active },{ tournament.CurrentRound },{ tournament.Status.ToString() }";
+            string output = $"{ tournament.id },{ tournament.TournamentName },{ SerializeList(tournament.TournamentEntries, '|') }," +
+                            $"{ SerializeRounds(tournament.Rounds) },{ tournament.CurrentRound }";
 
             return output;
         }
 
         private static string SerializePerson(PersonModel person)
         {
-            // [Id],[Nickname],[FirstName],[LastName],[DiscordTag],[EmailAddress]
+            // [id],[Nickname],[FirstName],[LastName],[DiscordTag],[EmailAddress]
 
-            string output = $"{ person.Id },{ person.Nickname },{ person.FirstName },{ person.LastName },{ person.DiscordTag },{ person.EmailAddress }";
+            string output = $"{ person.id },{ person.Nickname },{ person.FirstName },{ person.LastName },{ person.DiscordTag },{ person.EmailAddress }";
 
             return output;
         }
 
         private static string SerializeEntry(EntryModel entry)
         {
-            // [Id],[EntryName],(EntryMembers)[Id|Id|Id]
+            // [id],[EntryName],(EntryMembers)[id|id|id]
 
-            string output = $"{ entry.Id },{ entry.EntryName },{ ConvertPeopleListToString(entry.EntryMembers) }";
+            string output = $"{ entry.id },{ entry.EntryName },{ ConvertPeopleListToString(entry.EntryMembers) }";
 
             return output;
         }
 
         private static string SerializeMatchupEntry(MatchupEntryModel matchupEntry)
         {
-            // [Id],(EntryCompeting)[Id],[Score],(ParentMatchup)[Id]
+            // [id],(EntryCompeting)[id],[Score],(ParentMatchup)[id]
 
-            string output = $"{ matchupEntry.Id },{ matchupEntry.EntryCompeting?.Id.ToString() },{ matchupEntry.Score },{ matchupEntry.ParentMatchup?.Id.ToString() }";
+            string output = $"{ matchupEntry.id },{ matchupEntry.EntryCompeting?.id.ToString() },{ matchupEntry.Score },{ matchupEntry.ParentMatchup?.id.ToString() }";
 
             return output;
-        }
-
-        public static void SaveTournaments(this List<TournamentModel> tournaments)
-        {
-            // [Id],[TournamentName],(TournamentEntries)[Id|Id|Id],(Rounds)[Id^Id^Id|Id^Id^Id|Id^Id^Id],[Active],[CurrentRound],[Status]
-
-            List<string> lines = new List<string>();
-
-            foreach (TournamentModel tournament in tournaments)
-            {
-                lines.Add($"{ tournament.Id },{ tournament.TournamentName },{ SerializeEntryList(tournament.TournamentEntries) }," +
-                          $"{ SerializeRounds(tournament.Rounds) },{ tournament.Active },{ tournament.CurrentRound },{ tournament.Status.ToString() }");
-            }
-
-            File.WriteAllLines(GlobalConfig.TournamentsFile.FullFilePath(), lines);
-            _tournamentsOutdated = true;
         }
 
         private static string SerializeRounds(List<List<MatchupModel>> rounds)
@@ -809,7 +646,7 @@ namespace TMLibrary.Helpers
 
             foreach (List<MatchupModel> round in rounds)
             {
-                output += $"{ SerializeMatchupList(round) }|";
+                output += $"{ SerializeList(round, '^') }|";
             }
 
             output = output.Substring(0, output.Length - 1);
@@ -817,41 +654,13 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        private static string SerializeMatchupList(List<MatchupModel> matchups)
+        private static string SerializeList<T>(List<T> elements, char separator) where T : IModel
         {
             string output = "";
 
-            foreach (MatchupModel matchup in matchups)
+            foreach (T element in elements)
             {
-                output += $"{ matchup.Id }^";
-            }
-
-            output = output.Substring(0, output.Length - 1);
-
-            return output;
-        }
-
-        private static string SerializeMatchupEntryList(List<MatchupEntryModel> matchupEntries)
-        {
-            string output = "";
-
-            foreach (MatchupEntryModel matchupEntry in matchupEntries)
-            {
-                output += $"{ matchupEntry.Id }|";
-            }
-
-            output = output.Substring(0, output.Length - 1);
-
-            return output;
-        }
-
-        private static string SerializeEntryList(List<EntryModel> entries)
-        {
-            string output = "";
-
-            foreach (EntryModel entry in entries)
-            {
-                output += $"{ entry.Id }|";
+                output += $"{ element.id }{ separator }";
             }
 
             output = output.Substring(0, output.Length - 1);

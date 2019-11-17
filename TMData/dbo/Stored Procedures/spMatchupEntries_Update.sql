@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spMatchupEntries_Update]
-	@Id INT,
+	@id INT,
 	@EntryCompetingId INT = NULL,
 	@Score FLOAT = NULL
 AS
@@ -7,5 +7,5 @@ AS
 
 	UPDATE dbo.MatchupEntries
 	SET EntryCompetingId = @EntryCompetingId, Score = @Score
-	WHERE Id = @Id;
+	WHERE id = @id;
 RETURN 0

@@ -3,12 +3,12 @@
     /// <summary>
     /// Represents one person.
     /// </summary>
-    public class PersonModel
+    public class PersonModel : IModel
     {
         /// <summary>
         /// The unique identifier for the person.
         /// </summary>
-        public int Id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// The nickname of the person (eg. Minecraft name).

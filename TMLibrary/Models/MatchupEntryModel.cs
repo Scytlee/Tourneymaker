@@ -3,12 +3,12 @@
     /// <summary>
     /// Represents one entry in a matchup.
     /// </summary>
-    public class MatchupEntryModel
+    public class MatchupEntryModel : IModel
     {
         /// <summary>
         /// The unique identifier for the matchup entry.
         /// </summary>
-        public int Id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// The unique identifier for the entry.

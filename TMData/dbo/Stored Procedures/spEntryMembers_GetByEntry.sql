@@ -5,6 +5,6 @@ AS
 
 	SELECT p.*
 	FROM dbo.EntryMembers em
-	INNER JOIN dbo.People p ON em.PersonId = p.Id
+	INNER JOIN dbo.People p ON em.PersonId = p.id
 	WHERE em.EntryId = @EntryId;
 RETURN 0

@@ -14,46 +14,74 @@ namespace TMWinFormsUI
 {
     public partial class TournamentDashboardForm : Form
     {
-        private List<TournamentPreviewModel> _readyToStartTournaments;
-        private List<TournamentPreviewModel> _inProgressTournaments;
-        private List<TournamentPreviewModel> _finishedTournaments;
-        private List<TournamentPreviewModel> _tournamentsList = new List<TournamentPreviewModel>();
+        private List<TournamentPreviewModel> _allTournaments;
+        private List<TournamentPreviewModel> _readyToStartTournaments = new List<TournamentPreviewModel>();
+        private List<TournamentPreviewModel> _inProgressTournaments = new List<TournamentPreviewModel>();
+        private List<TournamentPreviewModel> _finishedTournaments = new List<TournamentPreviewModel>();
+        private List<TournamentPreviewModel> _tournamentsDropDownList = new List<TournamentPreviewModel>();
 
         public TournamentDashboardForm()
         {
             InitializeComponent();
 
-            LoadLists();
+            InitializeLists();
         }
 
-        // TODO Refactor this
-        private void LoadLists()
+        private void InitializeLists()
         {
-            _tournamentsList.Clear();
+            _allTournaments = GlobalConfig.Connection.LoadTournamentPreviews();
 
-            if (showReadyToStartCheckBox.Checked)
+            foreach (TournamentPreviewModel tournament in _allTournaments)
             {
-                if (_readyToStartTournaments == null)
+                switch (tournament.Status)
                 {
-                    _readyToStartTournaments = GlobalConfig.Connection.LoadTournamentPreviews(TournamentStatus.ReadyToStart); 
+                    case TournamentStatus.ReadyToStart:
+                        _readyToStartTournaments.Add(tournament);
+                        break;
+                    case TournamentStatus.InProgress:
+                        _inProgressTournaments.Add(tournament);
+                        break;
+                    case TournamentStatus.Finished:
+                        _finishedTournaments.Add(tournament);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-                _tournamentsList.AddRange(_readyToStartTournaments);
             }
-            if (showInProgressCheckBox.Checked)
+
+            _tournamentsDropDownList.AddRange(_inProgressTournaments);
+
+            RefreshView();
+        }
+
+        private void UpdateDropDown(TournamentStatus status, bool inDropDown)
+        {
+            if (inDropDown)
             {
-                if (_inProgressTournaments == null)
+                switch (status)
                 {
-                    _inProgressTournaments = GlobalConfig.Connection.LoadTournamentPreviews(TournamentStatus.InProgress);
+                    case TournamentStatus.ReadyToStart:
+                        _tournamentsDropDownList.AddRange(_readyToStartTournaments);
+                        break;
+                    case TournamentStatus.InProgress:
+                        _tournamentsDropDownList.AddRange(_inProgressTournaments);
+                        break;
+                    case TournamentStatus.Finished:
+                        _tournamentsDropDownList.AddRange(_finishedTournaments);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(status), status, null);
                 }
-                _tournamentsList.AddRange(_inProgressTournaments);
             }
-            if (showFinishedCheckBox.Checked)
+            else
             {
-                if (_finishedTournaments == null)
+                foreach (TournamentPreviewModel tournament in _allTournaments)
                 {
-                    _finishedTournaments = GlobalConfig.Connection.LoadTournamentPreviews(TournamentStatus.Finished);
+                    if (tournament.Status == status)
+                    {
+                        _tournamentsDropDownList.Remove(tournament);
+                    }
                 }
-                _tournamentsList.AddRange(_finishedTournaments);
             }
 
             RefreshView();
@@ -62,7 +90,7 @@ namespace TMWinFormsUI
         private void RefreshView()
         {
             loadTournamentDropDown.DataSource = null;
-            loadTournamentDropDown.DataSource = _tournamentsList;
+            loadTournamentDropDown.DataSource = _tournamentsDropDownList;
             loadTournamentDropDown.DisplayMember = nameof(TournamentModel.TournamentName);
         }
 
@@ -76,7 +104,7 @@ namespace TMWinFormsUI
         {
             if (loadTournamentDropDown.SelectedItem != null)
             {
-                int tournamentId = ((TournamentPreviewModel)loadTournamentDropDown.SelectedItem).Id;
+                int tournamentId = ((TournamentPreviewModel)loadTournamentDropDown.SelectedItem).id;
                 TournamentModel selectedTournament = GlobalConfig.Connection.LoadTournamentModel(tournamentId);
                 TournamentViewerForm form = new TournamentViewerForm(selectedTournament);
                 form.Show(); 
@@ -85,17 +113,17 @@ namespace TMWinFormsUI
 
         private void showReadyToStartCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            LoadLists();
+            UpdateDropDown(TournamentStatus.ReadyToStart, showReadyToStartCheckBox.Checked);
         }
 
         private void showInProgressCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            LoadLists();
+            UpdateDropDown(TournamentStatus.InProgress, showInProgressCheckBox.Checked);
         }
 
         private void showFinishedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            LoadLists();
+            UpdateDropDown(TournamentStatus.Finished, showFinishedCheckBox.Checked);
         }
     }
 }

@@ -87,6 +87,7 @@
     <Build Include="dbo\Stored Procedures\spMatchups_Update.sql" />
     <Build Include="dbo\Stored Procedures\spMatchupEntries_Update.sql" />
     <Build Include="dbo\Stored Procedures\spTournaments_Update.sql" />
+    <Build Include="dbo\Stored Procedures\spTournaments_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocations\TMData.publish.xml" />

@@ -154,27 +154,23 @@ namespace TMLibrary
         {
             bool isCompleted;
 
-            tournament.CurrentRound++;
-
-            if (tournament.Active == 0)
+            if (tournament.Status == TournamentStatus.ReadyToStart)
             {
-                // Tournament start
-                tournament.Active = 1;
-                tournament.Status = TournamentStatus.InProgress;
                 isCompleted = false;
+                tournament.CurrentRound = 1;
                 // TODO Send starting messages
             }
-            else if (tournament.Active == 1 && tournament.CurrentRound > tournament.Rounds.Count)
+            else if (tournament.Status == TournamentStatus.InProgress && tournament.CurrentRound == tournament.Rounds.Count)
             {
                 // Tournament completion
-                tournament.Active = 0;
-                tournament.Status = TournamentStatus.Finished;
+                tournament.CurrentRound = -1;
                 isCompleted = true;
                 // TODO Send final messages
             }
             else
             {
                 // Tournament progress
+                tournament.CurrentRound++;
                 isCompleted = false;
                 // TODO Send round advance messages
             }
@@ -192,7 +188,7 @@ namespace TMLibrary
                 {
                     foreach (MatchupEntryModel matchupEntry in roundMatchup.MatchupEntries)
                     {
-                        if (matchupEntry.ParentMatchup?.Id == matchup.Id)
+                        if (matchupEntry.ParentMatchup?.id == matchup.id)
                         {
                             matchupEntry.EntryCompeting = matchup.Winner;
                             GlobalConfig.Connection.UpdateMatchup(roundMatchup);

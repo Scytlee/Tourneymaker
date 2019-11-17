@@ -10,11 +10,15 @@ namespace TMLibrary
 {
     public static class GlobalConfig
     {
-        public const string PeopleFile = "PersonModels.csv";
-        public const string EntriesFile = "EntryModels.csv";
-        public const string TournamentsFile = "TournamentModels.csv";
-        public const string MatchupsFile = "MatchupModels.csv";
-        public const string MatchupEntriesFile = "MatchupEntryModels.csv";
+        public const string PeopleFile = "People.csv";
+        public const string EntriesFile = "Entries.csv";
+        public const string TournamentsFile = "Tournaments.csv";
+        public const string MatchupsFile = "Matchups.csv";
+        public const string MatchupEntriesFile = "MatchupEntries.csv";
+
+        public const string TournamentsReadyToStartFile = "TournamentsReadyToStart.csv";
+        public const string TournamentsInProgressFile = "TournamentsInProgress.csv";
+        public const string TournamentsFinishedFile = "TournamentsFinished.csv";
 
         public static IDataConnection Connection { get; private set; }
 

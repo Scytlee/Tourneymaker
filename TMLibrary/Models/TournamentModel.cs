@@ -6,7 +6,7 @@ namespace TMLibrary.Models
     /// <summary>
     /// Represents one tournament, with all of the rounds, matchups and outcomes.
     /// </summary>
-    public class TournamentModel
+    public class TournamentModel : IModel
     {
         public event EventHandler OnRoundComplete;
 
@@ -15,7 +15,7 @@ namespace TMLibrary.Models
         /// <summary>
         /// The unique identifier for the tournament.
         /// </summary>
-        public int Id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// The name given to this tournament.
@@ -33,25 +33,35 @@ namespace TMLibrary.Models
         public List<List<MatchupModel>> Rounds { get; set; } = new List<List<MatchupModel>>();
 
         /// <summary>
-        /// Together with CurrentRound property determines status of the tournament
-        /// Active = 0 && CurrentRound = 0 -> tournament not yet started
-        /// Active = 0 && CurrentRound = Rounds.Count + 1 -> tournament finished
-        /// Active = 1 && CurrentRound between 1 and Rounds.Count -> tournament in progress
+        /// Represents status of the tournament - ReadyToStart, InProgress or Finished.
         /// </summary>
-        public int Active { get; set; }
+        public TournamentStatus Status
+        {
+            get
+            {
+                TournamentStatus output;
+
+                if (CurrentRound == 0)
+                {
+                    output = TournamentStatus.ReadyToStart;
+                }
+                else if (CurrentRound == -1)
+                {
+                    output = TournamentStatus.Finished;
+                }
+                else
+                {
+                    output = TournamentStatus.InProgress;
+                }
+
+                return output;
+            }
+        }
 
         /// <summary>
-        /// Together with Active property determines status of the tournament
-        /// Active = 0 && CurrentRound = 0 -> tournament not yet started
-        /// Active = 0 && CurrentRound = Rounds.Count + 1 -> tournament finished
-        /// Active = 1 && CurrentRound between 1 and Rounds.Count -> tournament in progress
+        /// Current round of the tournament, or 0 if ReadyToStart, or -1 if Finished.
         /// </summary>
         public int CurrentRound { get; set; }
-
-        /// <summary>
-        /// Enum representing status of the tournament.
-        /// </summary>
-        public TournamentStatus Status { get; set; }
 
         public void CompleteRound()
         {

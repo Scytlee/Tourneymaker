@@ -34,17 +34,15 @@ namespace TMWinFormsUI
             LoadTournamentName();
 
             // Check tournament status and load elements accordingly
-            if (_activeTournament.Active == 0 && _activeTournament.CurrentRound == 0)
+            if (_activeTournament.Status == TournamentStatus.ReadyToStart)
             {
-                // Tournament ready
                 statusLabelName.Text = "Status";
                 statusLabelValue.Text = "Ready";
                 tournamentActionButton.Text = "Start tournament";
                 tournamentActionButton.Show();
             }
-            else if (_activeTournament.Active == 0 && _activeTournament.CurrentRound > _activeTournament.Rounds.Count)
+            else if (_activeTournament.Status == TournamentStatus.Finished)
             {
-                // Tournament finished
                 statusLabelName.Text = "Status";
                 statusLabelValue.Text = "Finished";
             }

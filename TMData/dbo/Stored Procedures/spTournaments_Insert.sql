@@ -1,11 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[spTournaments_Insert]
 	@TournamentName NVARCHAR(100),
-	@Id INT = 0 OUTPUT
+	@id INT = 0 OUTPUT
 AS
 	SET NOCOUNT ON;
 
-	INSERT INTO dbo.Tournaments (TournamentName, Active, CurrentRound)
-	VALUES (@TournamentName, 0, 0);
+	INSERT INTO dbo.Tournaments (TournamentName, CurrentRound)
+	VALUES (@TournamentName, 0);
 
-	SELECT @Id = SCOPE_IDENTITY();
+	SELECT @id = SCOPE_IDENTITY();
 RETURN 0

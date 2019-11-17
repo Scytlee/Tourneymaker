@@ -5,6 +5,6 @@ AS
 
 	SELECT e.*
 	FROM dbo.Entries e
-	INNER JOIN dbo.TournamentEntries te ON e.Id = te.EntryId
+	INNER JOIN dbo.TournamentEntries te ON e.id = te.EntryId
 	WHERE te.TournamentId = @TournamentId;
 RETURN 0

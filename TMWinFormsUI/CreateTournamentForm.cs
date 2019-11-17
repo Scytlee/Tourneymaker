@@ -88,9 +88,7 @@ namespace TMWinFormsUI
                 {
                     TournamentName = tournamentNameValue.Text,
                     TournamentEntries = _selectedEntries,
-                    Active = 0,
-                    CurrentRound = 0,
-                    Status = TournamentStatus.ReadyToStart
+                    CurrentRound = 0
                 };
 
                 // Wire up matchups
