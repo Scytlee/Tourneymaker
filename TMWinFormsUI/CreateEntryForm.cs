@@ -47,7 +47,7 @@ namespace TMWinFormsUI
             string emailAddress)
         {
             // Validate the data in the form
-            if (ValidationHelper.ValidatePersonCreatorForm(out string errorMessage, personCreatorNicknameValue.Text,
+            if (ValidationHelper.ValidatePersonFormWithErrorMessage(out string errorMessage, personCreatorNicknameValue.Text,
                 personCreatorFirstNameValue.Text, personCreatorLastNameValue.Text,
                 personCreatorDiscordTagValue.Text, personCreatorEmailAddressValue.Text))
             {

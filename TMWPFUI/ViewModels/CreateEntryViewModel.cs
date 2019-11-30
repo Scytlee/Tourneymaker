@@ -11,7 +11,7 @@ using TMLibrary.Helpers;
 
 namespace TMWPFUI.ViewModels
 {
-    public class CreateEntryViewModel : Conductor<object>
+    public class CreateEntryViewModel : Conductor<object>, IHandle<PersonModel>
     {
         private string _entryName;
         private BindingList<PersonModel> _availableEntryMembers;
@@ -19,9 +19,13 @@ namespace TMWPFUI.ViewModels
         private BindingList<PersonModel> _selectedEntryMembers;
         private PersonModel _selectedEntryMemberToRemove;
 
+        private bool _selectedEntryMembersIsVisible = true;
+        private bool _createPersonIsVisible = false;
+
         public CreateEntryViewModel()
         {
             InitializeLists();
+            EventAggregationProvider.TMEventAggregator.Subscribe(this);
         }
 
         private void InitializeLists()
@@ -83,6 +87,26 @@ namespace TMWPFUI.ViewModels
             }
         }
 
+        public bool SelectedEntryMembersIsVisible
+        {
+            get { return _selectedEntryMembersIsVisible; }
+            set
+            {
+                _selectedEntryMembersIsVisible = value; 
+                NotifyOfPropertyChange(() => SelectedEntryMembersIsVisible);
+            }
+        }
+
+        public bool CreatePersonIsVisible
+        {
+            get { return _createPersonIsVisible; }
+            set
+            {
+                _createPersonIsVisible = value;
+                NotifyOfPropertyChange(() => CreatePersonIsVisible);
+            }
+        }
+
         public bool CanAddMember
         {
             get
@@ -107,7 +131,9 @@ namespace TMWPFUI.ViewModels
 
         public void CreateMember()
         {
-
+            ActivateItem(new CreatePersonViewModel());
+            SelectedEntryMembersIsVisible = false;
+            CreatePersonIsVisible = true;
         }
 
         public bool CanRemoveMember
@@ -147,7 +173,7 @@ namespace TMWPFUI.ViewModels
             }
         }
 
-        public void CreateEntry(string entryName, BindingList<PersonModel> selectedEntryMembers)
+        public void CreateEntry()
         {
             // Create the EntryModel
             EntryModel entry = new EntryModel
@@ -161,6 +187,21 @@ namespace TMWPFUI.ViewModels
 
             // TODO: Pass the entry back to the parent and close the form
 
+
+        }
+
+        public void Handle(PersonModel person)
+        {
+            // Check if model passed is valid
+            if (string.IsNullOrWhiteSpace(person.Nickname) == false && string.IsNullOrWhiteSpace(person.FirstName) == false)
+            {
+                SelectedEntryMembers.Add(person); 
+            }
+
+            SelectedEntryMembersIsVisible = true;
+            CreatePersonIsVisible = false;
+
+            NotifyOfPropertyChange(() => CanCreateEntry);
         }
     }
 }

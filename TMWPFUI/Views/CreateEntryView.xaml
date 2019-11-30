@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TMWPFUI.Views"
-             mc:Ignorable="d" Background="White"
-             d:DesignHeight="350" d:DesignWidth="350">
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock FontSize="24" Margin="0 0 0 10">Create entry</TextBlock>
@@ -20,10 +20,15 @@
                 <Button x:Name="CreateMember" Padding="5">Create member</Button>
                 <Button x:Name="RemoveMember" Padding="5" Margin="5 0 0 0">Remove member</Button>
             </StackPanel>
-            <TextBlock Margin="5 10">Selected entry members</TextBlock>
-            <ListBox x:Name="SelectedEntryMembers" DisplayMemberPath="DisplayName" Margin="5 0"
-                     SelectedItem="{Binding Path=SelectedEntryMemberToRemove, Mode=TwoWay}"
-                     MinHeight="20"/>
+            <StackPanel x:Name="SelectedEntryMembersIsVisible" Orientation="Vertical" Margin="5 10 5 0">
+                <TextBlock Margin="0 0 0 10">Selected entry members</TextBlock>
+                <ListBox x:Name="SelectedEntryMembers" DisplayMemberPath="DisplayName"
+                         SelectedItem="{Binding Path=SelectedEntryMemberToRemove, Mode=TwoWay}"
+                         MinHeight="20"/>
+            </StackPanel>
+            <StackPanel x:Name="CreatePersonIsVisible" Orientation="Vertical" Margin="5 10 5 0">
+                <ContentControl x:Name="ActiveItem"/>
+            </StackPanel>
             <Button x:Name="CreateEntry" Margin="5 10 5 5" Padding="5">Create entry</Button>
         </StackPanel>
     </Grid>

@@ -21,7 +21,7 @@ namespace TMLibrary.Helpers
             return $"\n{ valueName } can be at most { valueLength } characters long.";
         }
 
-        public static bool ValidatePersonCreatorForm(out string errorMessage, string nickname, string firstName,
+        public static bool ValidatePersonFormWithErrorMessage(out string errorMessage, string nickname, string firstName,
             string lastName, string discordTag, string emailAddress)
         {
             bool output = true;
@@ -75,6 +75,48 @@ namespace TMLibrary.Helpers
             return output;
         }
 
+        public static bool ValidatePersonForm(string nickname, string firstName,
+            string lastName, string discordTag, string emailAddress)
+        {
+            // Checking personal data of the person
+            if (string.IsNullOrWhiteSpace(nickname) && (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)))
+            {
+                return false;
+            }
+
+            // Checking communication way with the person
+            if (string.IsNullOrWhiteSpace(discordTag) && string.IsNullOrWhiteSpace(emailAddress))
+            {
+                return false;
+            }
+
+            // Checking length of input data
+            if (nickname?.Length > 50)
+            {
+                return false;
+            }
+            if (firstName?.Length > 50)
+            {
+                return false;
+            }
+            if (lastName?.Length > 50)
+            {
+                return false;
+            }
+            if (discordTag?.Length > 100)
+            {
+                return false;
+            }
+            if (emailAddress?.Length > 200)
+            {
+                return false;
+            }
+
+            // TODO Check validity of Discord tag and email address
+
+            return true;
+        }
+
         public static bool ValidateEntryFormWithErrorMessage(out string errorMessage, string entryName, IEnumerable<PersonModel> entryMembers)
         {
             bool output = true;
@@ -115,27 +157,25 @@ namespace TMLibrary.Helpers
                 return false;
             }
 
-            bool output = true;
-
             if (entryMembers.Count() == 0)
             {
-                output = false;
+                return false;
             }
             if (entryMembers.Count() == 1 && !string.IsNullOrWhiteSpace(entryName))
             {
-                output = false;
+                return false;
             }
             if (entryMembers.Count() >= 2 && string.IsNullOrWhiteSpace(entryName))
             {
-                output = false;
+                return false;
             }
 
             if (entryName?.Length > 100)
             {
-                output = false;
+                return false;
             }
 
-            return output;
+            return true;
         }
 
         public static bool ValidateTournamentForm(out string errorMessage, string tournamentName,

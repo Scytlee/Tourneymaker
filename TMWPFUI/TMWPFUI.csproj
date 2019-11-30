@@ -68,10 +68,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="EventAggregationProvider.cs" />
     <Compile Include="ViewModels\CreateEntryViewModel.cs" />
+    <Compile Include="ViewModels\CreatePersonViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\CreateEntryView.xaml.cs">
       <DependentUpon>CreateEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreatePersonView.xaml.cs">
+      <DependentUpon>CreatePersonView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -81,6 +86,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CreateEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreatePersonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
