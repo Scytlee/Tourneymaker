@@ -21,6 +21,8 @@ namespace TMWPFUI.ViewModels
             GlobalConfig.InitializeConnection(ConnectionType.TextFile);
 
             InitializeLists();
+
+            ActivateItem(new CreateEntryViewModel());
         }
 
         public void CreateTournament()

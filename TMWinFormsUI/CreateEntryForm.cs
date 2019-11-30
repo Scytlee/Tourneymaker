@@ -145,7 +145,7 @@ namespace TMWinFormsUI
         private void createEntryButton_Click(object sender, EventArgs e)
         {
             // Validate the data in the form
-            if (ValidationHelper.ValidateEntryForm(out string errorMessage, entryNameValue.Text, _selectedPeople))
+            if (ValidationHelper.ValidateEntryFormWithErrorMessage(out string errorMessage, entryNameValue.Text, _selectedPeople))
             {
                 // Create the EntryModel
                 EntryModel entry = new EntryModel

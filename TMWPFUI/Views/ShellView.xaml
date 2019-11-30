@@ -33,7 +33,7 @@
             <TextBlock x:Name="SelectedTournament_TournamentName"/>
         </StackPanel>
 
-        <ContentControl Grid.Row="2" Grid.Column="2"/>
+        <ContentControl x:Name="ActiveItem" Grid.Row="2" Grid.Column="2"/>
 
     </Grid>
 </Window>

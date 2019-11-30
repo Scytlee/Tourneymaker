@@ -75,22 +75,22 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        public static bool ValidateEntryForm(out string errorMessage, string entryName, List<PersonModel> entryMembers)
+        public static bool ValidateEntryFormWithErrorMessage(out string errorMessage, string entryName, IEnumerable<PersonModel> entryMembers)
         {
             bool output = true;
             StringBuilder errorMessageBuilder = new StringBuilder();
 
-            if (entryMembers.Count == 0)
+            if (entryMembers.Count() == 0)
             {
                 output = false;
                 errorMessageBuilder.Append("\nEntry has to have at least 1 member.");
             }
-            if (entryMembers.Count == 1 && !string.IsNullOrWhiteSpace(entryName))
+            if (entryMembers.Count() == 1 && !string.IsNullOrWhiteSpace(entryName))
             {
                 output = false;
                 errorMessageBuilder.Append("\nEntry name can be set only for entries with 2 or more members.");
             }
-            if (entryMembers.Count >= 2 && string.IsNullOrWhiteSpace(entryName))
+            if (entryMembers.Count() >= 2 && string.IsNullOrWhiteSpace(entryName))
             {
                 output = false;
                 errorMessageBuilder.Append(NoValueMessage("entry name"));
@@ -103,6 +103,37 @@ namespace TMLibrary.Helpers
             }
 
             errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
+
+            return output;
+        }
+
+        public static bool ValidateEntryForm(string entryName, IEnumerable<PersonModel> entryMembers)
+        {
+            // Null check
+            if (entryMembers == null)
+            {
+                return false;
+            }
+
+            bool output = true;
+
+            if (entryMembers.Count() == 0)
+            {
+                output = false;
+            }
+            if (entryMembers.Count() == 1 && !string.IsNullOrWhiteSpace(entryName))
+            {
+                output = false;
+            }
+            if (entryMembers.Count() >= 2 && string.IsNullOrWhiteSpace(entryName))
+            {
+                output = false;
+            }
+
+            if (entryName?.Length > 100)
+            {
+                output = false;
+            }
 
             return output;
         }
