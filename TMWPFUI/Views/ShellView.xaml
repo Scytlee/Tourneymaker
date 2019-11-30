@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMWPFUI.Views" FontSize="18"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="ShellView" Height="450" Width="800">
+        Title="ShellView" Height="500" Width="600">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center"
+                   FontSize="36">
+            Tourneymaker
+        </TextBlock>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+            <Button x:Name="CreateTournament" Padding="10">Create tournament</Button>
+            <TextBlock FontWeight="Bold" Margin="0 10 0 0">Existing tournaments</TextBlock>
+            <ListBox x:Name="ExistingTournaments" DisplayMemberPath="TournamentName"
+                     SelectedItem="{Binding Path=SelectedTournament, Mode=OneWayToSource}"/>
+            <TextBlock x:Name="SelectedTournament_TournamentName"/>
+        </StackPanel>
+
+        <ContentControl Grid.Row="2" Grid.Column="2"/>
+
     </Grid>
 </Window>
