@@ -22,7 +22,7 @@ namespace TMLibrary.Helpers
             {
                 if (_entriesOutdated)
                 {
-                    _entries = GlobalConfig.EntriesFile.FullFilePath().LoadFile().ConvertToEntryModels();
+                    _entries = GlobalConfig.EntriesFile.FullFilePath().LoadFile().DeserializeEntriesFile();
                     _entriesOutdated = false;
                 }
 
@@ -39,7 +39,7 @@ namespace TMLibrary.Helpers
             {
                 if (_peopleOutdated)
                 {
-                    _people = GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+                    _people = GlobalConfig.PeopleFile.FullFilePath().LoadFile().DeserializePeopleFile();
                     _peopleOutdated = false;
                 }
 
@@ -47,17 +47,33 @@ namespace TMLibrary.Helpers
             }
         }
 
+        /// <summary>
+        /// Generates file path for the given file name with the path
+        /// given in the configuration file.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>Full file path for the given file.</returns>
         public static string FullFilePath(this string fileName)
         {
             return $"{ ConfigurationManager.AppSettings["filePath"] }\\{ fileName }";
         }
 
+        /// <summary>
+        /// Reads the given file.
+        /// </summary>
+        /// <param name="file">Full path of the file.</param>
+        /// <returns>List of all lines read from the file, or empty list if the file doesn't exist.</returns>
         public static List<string> LoadFile(this string file)
         {
             return !File.Exists(file) ? new List<string>() : File.ReadAllLines(file).ToList();
         }
 
-        private static List<PersonModel> ConvertToPersonModels(this List<string> peopleSerialized)
+        /// <summary>
+        /// Converts given list of serialized people models to PersonModels.
+        /// </summary>
+        /// <param name="peopleSerialized">List of serialized people models.</param>
+        /// <returns>List of PersonModels.</returns>
+        private static List<PersonModel> DeserializePeopleFile(this List<string> peopleSerialized)
         {
             List<PersonModel> output = new List<PersonModel>();
 
@@ -75,6 +91,11 @@ namespace TMLibrary.Helpers
             return output;
         }
 
+        /// <summary>
+        /// Deserializes given person data.
+        /// </summary>
+        /// <param name="personSerialized">Serialized data of the person.</param>
+        /// <returns>Deserialized data as PersonModel.</returns>
         private static PersonModel DeserializePerson(string personSerialized)
         {
             // [id],[Nickname],[FirstName],[LastName],[DiscordTag],[EmailAddress]
@@ -94,7 +115,7 @@ namespace TMLibrary.Helpers
             return output;
         }
 
-        private static List<EntryModel> ConvertToEntryModels(this List<string> entriesSerialized)
+        private static List<EntryModel> DeserializeEntriesFile(this List<string> entriesSerialized)
         {
             List<EntryModel> output = new List<EntryModel>();
 

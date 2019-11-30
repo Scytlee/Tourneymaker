@@ -41,7 +41,7 @@ namespace TMWinFormsUI
 
         private void addSelectedEntryButton_Click(object sender, EventArgs e)
         {
-            EntryModel entry = (EntryModel) selectEntryDropDown.SelectedItem;
+            EntryModel entry = (EntryModel)selectEntryDropDown.SelectedItem;
 
             if (entry != null)
             {
@@ -67,7 +67,7 @@ namespace TMWinFormsUI
 
         private void removeSelectedEntryButton_Click(object sender, EventArgs e)
         {
-            EntryModel entry = (EntryModel) tournamentEntriesListBox.SelectedItem;
+            EntryModel entry = (EntryModel)tournamentEntriesListBox.SelectedItem;
 
             if (entry != null)
             {

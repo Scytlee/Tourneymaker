@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\MessagingHelper.cs" />
     <Compile Include="Helpers\TextConnectionHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="GlobalConfig.cs" />

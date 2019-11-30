@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using TMLibrary.Helpers;
 using TMLibrary.Models;
 
 namespace TMLibrary
@@ -150,6 +151,7 @@ namespace TMLibrary
             }
         }
 
+        // TODO Wire up messaging
         public static bool ProgressTournament(TournamentModel tournament)
         {
             bool isCompleted;
@@ -158,21 +160,44 @@ namespace TMLibrary
             {
                 isCompleted = false;
                 tournament.CurrentRound = 1;
-                // TODO Send starting messages
+
+                // Send messages
+
+                //foreach (MatchupModel matchup in tournament.Rounds[0])
+                //{
+                //    foreach (MatchupEntryModel matchupEntry in matchup.MatchupEntries)
+                //    {
+                //        foreach (PersonModel person in matchupEntry.EntryCompeting.EntryMembers)
+                //        {
+                //            if (person.DiscordTag != "")
+                //            {
+                //                string message = MessagingHelper.GenerateMessage();
+                //                MessagingHelper.SendDiscordMessage(person.DiscordTag, message);
+                //            }
+                //            if (person.EmailAddress != "")
+                //            {
+                //                string message = MessagingHelper.GenerateMessage();
+                //                MessagingHelper.SendEmail(person.EmailAddress, message);
+                //            }
+                //        }
+                //    }
+                //}
             }
             else if (tournament.Status == TournamentStatus.InProgress && tournament.CurrentRound == tournament.Rounds.Count)
             {
                 // Tournament completion
                 tournament.CurrentRound = -1;
                 isCompleted = true;
-                // TODO Send final messages
+
+                // Send messages
             }
             else
             {
                 // Tournament progress
                 tournament.CurrentRound++;
                 isCompleted = false;
-                // TODO Send round advance messages
+
+                // Send messages
             }
 
             GlobalConfig.Connection.UpdateTournament(tournament);
