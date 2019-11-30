@@ -178,7 +178,7 @@ namespace TMLibrary.Helpers
             return true;
         }
 
-        public static bool ValidateTournamentForm(out string errorMessage, string tournamentName,
+        public static bool ValidateTournamentFormWithErrorMessage(out string errorMessage, string tournamentName,
             List<EntryModel> tournamentEntries)
         {
             bool output = true;
@@ -204,6 +204,31 @@ namespace TMLibrary.Helpers
             errorMessage = errorMessageBuilder.Length == 0 ? "" : errorMessageBuilder.ToString();
 
             return output;
+        }
+
+        public static bool ValidateTournamentForm(string tournamentName, IEnumerable<EntryModel> tournamentEntries)
+        {
+            // Null check
+            if (tournamentEntries == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(tournamentName))
+            {
+                return false;
+            }
+            if (tournamentEntries.Count() < 2)
+            {
+                return false;
+            }
+
+            if (tournamentName?.Length > 100)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static bool ValidateUpdateScoreForm(out string errorMessage, string entryOneScore, string entryTwoScore)

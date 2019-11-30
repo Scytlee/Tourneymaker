@@ -158,6 +158,12 @@ namespace TMWPFUI.ViewModels
             NotifyOfPropertyChange(() => CanCreateEntry);
         }
 
+        public void CancelCreation()
+        {
+            EventAggregationProvider.TMEventAggregator.PublishOnUIThread(new EntryModel());
+            this.TryClose();
+        }
+
         public bool CanCreateEntry
         {
             get
@@ -185,9 +191,9 @@ namespace TMWPFUI.ViewModels
             // Add the EntryModel to the database
             GlobalConfig.Connection.CreateEntry(entry);
 
-            // TODO: Pass the entry back to the parent and close the form
-
-
+            // Pass the entry back to the parent and close the form
+            EventAggregationProvider.TMEventAggregator.PublishOnUIThread(entry);
+            this.TryClose();
         }
 
         public void Handle(PersonModel person)

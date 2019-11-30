@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMWPFUI.Views" FontSize="18"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="ShellView" Height="500" Width="600">
+        Title="ShellView" Height="700" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>

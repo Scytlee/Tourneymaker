@@ -10,7 +10,7 @@ using TMLibrary.Models;
 
 namespace TMWPFUI.ViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : Conductor<object>, IHandle<TournamentModel>
     {
         private BindingList<TournamentPreviewModel> _existingTournaments;
         private TournamentModel _loadedTournament;
@@ -20,14 +20,14 @@ namespace TMWPFUI.ViewModels
             // Initialize the database connections
             GlobalConfig.InitializeConnection(ConnectionType.TextFile);
 
-            InitializeLists();
+            EventAggregationProvider.TMEventAggregator.Subscribe(this);
 
-            ActivateItem(new CreateEntryViewModel());
+            InitializeLists();
         }
 
         public void CreateTournament()
         {
-
+            ActivateItem(new CreateTournamentViewModel());
         }
 
         private void InitializeLists()
@@ -60,6 +60,12 @@ namespace TMWPFUI.ViewModels
                     NotifyOfPropertyChange(() => SelectedTournament);
                 }
             }
+        }
+
+        public void Handle(TournamentModel message)
+        {
+            // Open the tournament viewer to the given tournament
+            throw new NotImplementedException();
         }
     }
 }
